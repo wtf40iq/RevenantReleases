@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="../RevenantLauncherSetup/RevenantLauncherSetup.csproj" Id="8a9eaf14-eefd-4c72-aaa6-fe3e43a82424" />
-  <Project Path="RevenantLauncher.csproj" />
-  <Project Path="../RevenantLauncher.Tests/RevenantLauncher.Tests.csproj" />
-  <Project Path="../RevenantAuthServer/RevenantAuthServer.csproj" />
-</Solution>

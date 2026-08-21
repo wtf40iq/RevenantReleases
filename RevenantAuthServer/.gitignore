@@ -1,8 +1,0 @@
-bin/
-obj/
-data/
-*.user
-.vs/
-*.db
-*.db-shm
-*.db-wal
