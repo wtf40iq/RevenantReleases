@@ -1,0 +1,297 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             x:Class="RevenantLauncher.Views.CustomizationView"
+             x:DataType="vm:CustomizationViewModel">
+
+    <UserControl.Styles>
+        <!-- Карточка выбора темы -->
+        <Style Selector="Border.themeCard">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="{DynamicResource CardBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="BorderBrush" Duration="0:0:0.15"/>
+                    <BrushTransition Property="Background" Duration="0:0:0.15"/>
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Border.themeCard:pointerover">
+            <Setter Property="Background" Value="{DynamicResource CardHoverBackground}"/>
+            <Setter Property="BorderBrush" Value="#607C4DFF"/>
+        </Style>
+        <!-- Активная тема — фиолетовая рамка -->
+        <Style Selector="Border.themeCard.themeCardActive">
+            <Setter Property="BorderBrush" Value="#7C4DFF"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <!-- Бейдж "Активна" -->
+        <Style Selector="Border.activeBadge">
+            <Setter Property="Background" Value="#3066BB6A"/>
+            <Setter Property="BorderBrush" Value="#5066BB6A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Padding" Value="8,3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Panel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,12,0">
+            <StackPanel Margin="40,20,40,100" Spacing="20" MaxWidth="900" HorizontalAlignment="Left">
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Кастомизация" FontSize="32" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="Выбери дизайн лаунчера"
+                               FontSize="14" Foreground="#888888"/>
+                </StackPanel>
+
+                <!-- ===== THEME ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
+                                      Width="20" Height="20" Foreground="#B388FF"/>
+                            <TextBlock Text="Тема оформления" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+
+                            <!-- ===== STANDART ===== -->
+                            <Border Classes="themeCard" Classes.themeCardActive="{Binding IsStandart}"
+                                    Width="360" PointerPressed="StandartCard_Click">
+                                <StackPanel Spacing="14">
+                                    <!-- Превью -->
+                                    <Border Height="170" CornerRadius="10" ClipToBounds="True" Background="#1A1025"
+                                            BorderBrush="#25FFFFFF" BorderThickness="1">
+                                        <Panel>
+                                            <!-- Баннер -->
+                                            <Border Background="#3A2E52"/>
+                                            <!-- Тёмный сайдбар -->
+                                            <Border Width="46" HorizontalAlignment="Left" Background="#CC0E0A18">
+                                                <StackPanel Spacing="6" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Border Width="22" Height="22" CornerRadius="6" Background="#2A2040"/>
+                                                    <Border Width="22" Height="22" CornerRadius="6" Background="#1AFFFFFF"/>
+                                                    <Border Width="22" Height="22" CornerRadius="6" Background="#1AFFFFFF"/>
+                                                </StackPanel>
+                                            </Border>
+                                            <!-- Контент -->
+                                            <StackPanel Margin="62,0,14,0" VerticalAlignment="Center" Spacing="8">
+                                                <Border Height="26" CornerRadius="12" Background="#181225" BorderBrush="#25FFFFFF" BorderThickness="1"/>
+                                                <Border Height="26" CornerRadius="12" Background="#181225" BorderBrush="#25FFFFFF" BorderThickness="1"/>
+                                                <Border Height="30" Width="120" CornerRadius="15" Background="#7C4DFF" HorizontalAlignment="Left"/>
+                                            </StackPanel>
+                                        </Panel>
+                                    </Border>
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Standart" FontSize="18" FontWeight="Bold"/>
+                                            <TextBlock Text="Классический тёмный дизайн лаунчера"
+                                                       FontSize="12" Foreground="#888888" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Classes="activeBadge" IsVisible="{Binding IsStandart}">
+                                            <TextBlock Text="Активна" FontSize="11" FontWeight="SemiBold" Foreground="#66BB6A"/>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- ===== NEW (liquid glass) ===== -->
+                            <Border Classes="themeCard" Classes.themeCardActive="{Binding IsNew}"
+                                    Width="360" PointerPressed="NewCard_Click">
+                                <StackPanel Spacing="14">
+                                    <!-- Превью -->
+                                    <Border Height="170" CornerRadius="16" ClipToBounds="True" Background="#1A1025"
+                                            BorderBrush="#45FFFFFF" BorderThickness="1">
+                                        <Panel>
+                                            <!-- Баннер -->
+                                            <Border>
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                        <GradientStop Color="#507C4DFF" Offset="0"/>
+                                                        <GradientStop Color="#20FF9E5E" Offset="0.55"/>
+                                                        <GradientStop Color="#30B388FF" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <!-- Сайдбар со стеклянной активной плиткой -->
+                                            <Border Width="46" HorizontalAlignment="Left" Background="#CC0E0A18">
+                                                <StackPanel Spacing="6" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#38FFFFFF" BorderBrush="#50FFFFFF" BorderThickness="1"/>
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#1FFFFFFF" BorderBrush="#45FFFFFF" BorderThickness="1"/>
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#1FFFFFFF" BorderBrush="#45FFFFFF" BorderThickness="1"/>
+                                                </StackPanel>
+                                            </Border>
+                                            <!-- Жидкое стекло: прозрачные пилюли со светлой кромкой -->
+                                            <StackPanel Margin="62,0,14,0" VerticalAlignment="Center" Spacing="8">
+                                                <Border Height="26" CornerRadius="13" Background="#26FFFFFF" BorderBrush="#50FFFFFF" BorderThickness="1"/>
+                                                <Border Height="26" CornerRadius="13" Background="#26FFFFFF" BorderBrush="#50FFFFFF" BorderThickness="1"/>
+                                                <Border Height="30" Width="120" CornerRadius="15" Background="#7C4DFF" HorizontalAlignment="Left"/>
+                                            </StackPanel>
+                                        </Panel>
+                                    </Border>
+
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Glass" FontSize="18" FontWeight="Bold"/>
+                                            <TextBlock Text="Полупрозрачные стеклянные элементы"
+                                                       FontSize="12" Foreground="#888888" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Classes="activeBadge" IsVisible="{Binding IsNew}">
+                                            <TextBlock Text="Активна" FontSize="11" FontWeight="SemiBold" Foreground="#66BB6A"/>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== BACKGROUND ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"
+                                      Width="20" Height="20" Foreground="#B388FF"/>
+                            <TextBlock Text="Фон лаунчера" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ItemsControl ItemsSource="{Binding Banners}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="vm:BannerItem">
+                                    <Border Classes="themeCard" Classes.themeCardActive="{Binding IsSelected}"
+                                            Width="250" Margin="0,0,16,16"
+                                            PointerPressed="BannerCard_Click" Tag="{Binding Name}">
+                                        <StackPanel Spacing="10">
+                                            <Border Height="130" CornerRadius="10" ClipToBounds="True" Background="#241839">
+                                                <Image Source="{Binding Preview}" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Grid ColumnDefinitions="*,Auto">
+                                                <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold"
+                                                           VerticalAlignment="Center"/>
+                                                <Border Grid.Column="1" Classes="activeBadge" IsVisible="{Binding IsSelected}">
+                                                    <TextBlock Text="Активен" FontSize="11" FontWeight="SemiBold" Foreground="#66BB6A"/>
+                                                </Border>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== SIDEBAR ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"
+                                      Width="20" Height="20" Foreground="#B388FF"/>
+                            <TextBlock Text="Меню слева" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+
+                            <!-- Прозрачное -->
+                            <Border Classes="themeCard" Classes.themeCardActive="{Binding IsSidebarGradient}"
+                                    Width="360" PointerPressed="SidebarGradientCard_Click">
+                                <StackPanel Spacing="14">
+                                    <Border Height="150" CornerRadius="10" ClipToBounds="True" Background="#1A1025"
+                                            BorderBrush="#25FFFFFF" BorderThickness="1">
+                                        <Panel>
+                                            <Border>
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                        <GradientStop Color="#507C4DFF" Offset="0"/>
+                                                        <GradientStop Color="#20FF9E5E" Offset="0.55"/>
+                                                        <GradientStop Color="#30B388FF" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <Border Width="46" HorizontalAlignment="Left">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                                        <GradientStop Color="#CC0E0A18" Offset="0"/>
+                                                        <GradientStop Color="#000E0A18" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <StackPanel Spacing="6" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#2A2040" BorderBrush="#50FFFFFF" BorderThickness="1"/>
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#20000000"/>
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#20000000"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Panel>
+                                    </Border>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Прозрачное" FontSize="18" FontWeight="Bold"/>
+                                            <TextBlock Text="Меню плавно растворяется в фоне"
+                                                       FontSize="12" Foreground="#888888" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Classes="activeBadge" IsVisible="{Binding IsSidebarGradient}">
+                                            <TextBlock Text="Активно" FontSize="11" FontWeight="SemiBold" Foreground="#66BB6A"/>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Тёмное -->
+                            <Border Classes="themeCard" Classes.themeCardActive="{Binding IsSidebarDark}"
+                                    Width="360" PointerPressed="SidebarDarkCard_Click">
+                                <StackPanel Spacing="14">
+                                    <Border Height="150" CornerRadius="10" ClipToBounds="True" Background="#1A1025"
+                                            BorderBrush="#25FFFFFF" BorderThickness="1">
+                                        <Panel>
+                                            <Border>
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                        <GradientStop Color="#507C4DFF" Offset="0"/>
+                                                        <GradientStop Color="#20FF9E5E" Offset="0.55"/>
+                                                        <GradientStop Color="#30B388FF" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <Border Width="46" HorizontalAlignment="Left" Background="#F5150D20"
+                                                    BorderBrush="#25FFFFFF" BorderThickness="0,0,1,0">
+                                                <StackPanel Spacing="6" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#2A2040" BorderBrush="#50FFFFFF" BorderThickness="1"/>
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#20FFFFFF"/>
+                                                    <Border Width="22" Height="22" CornerRadius="8" Background="#20FFFFFF"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Panel>
+                                    </Border>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Тёмное" FontSize="18" FontWeight="Bold"/>
+                                            <TextBlock Text="Отдельная тёмная панель с кромкой"
+                                                       FontSize="12" Foreground="#888888" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Classes="activeBadge" IsVisible="{Binding IsSidebarDark}">
+                                            <TextBlock Text="Активно" FontSize="11" FontWeight="SemiBold" Foreground="#66BB6A"/>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Panel>
+
+</UserControl>

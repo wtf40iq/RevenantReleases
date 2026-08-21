@@ -1,0 +1,235 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             xmlns:models="using:RevenantLauncher.Models"
+             xmlns:asyncImageLoader="using:AsyncImageLoader"
+             xmlns:behaviors="using:RevenantLauncher.Behaviors"
+             x:Class="RevenantLauncher.Views.ModDetailsDialog"
+             x:DataType="vm:ModDetailsDialogViewModel">
+
+    <Border Background="#B0000000" ClipToBounds="True">
+        <Border Background="{DynamicResource DialogBackground}"
+                CornerRadius="{DynamicResource SectionCornerRadius}"
+                BorderBrush="{DynamicResource DialogBorderBrush}"
+                BorderThickness="1"
+                Width="900" Height="700"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BoxShadow="0 20 60 0 #80000000">
+            <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+
+                <!-- ===== HEADER ===== -->
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+
+                    <!-- Icon -->
+                    <Border Width="80" Height="80" CornerRadius="14" Background="#2A1F3F" ClipToBounds="True">
+                        <Panel>
+                            <PathIcon Data="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"
+                                      Foreground="#B388FF" Width="36" Height="36"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Image asyncImageLoader:ImageLoader.Source="{Binding IconUrl}" Stretch="UniformToFill"
+                                   behaviors:IconPlaceholderBehavior.IsEnabled="True"/>
+                        </Panel>
+                    </Border>
+
+                    <!-- Title + Info -->
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center" Spacing="6">
+                        <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="{Binding ShortDescription}" FontSize="13" Foreground="#B0B0B0"
+                                   TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,4,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <PathIcon Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                          Foreground="#B388FF" Width="14" Height="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding DownloadsDisplay}" FontSize="12" Foreground="#B388FF" FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <PathIcon Data="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                          Foreground="#FF6666" Width="14" Height="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding FollowersDisplay}" FontSize="12" Foreground="#FF9999" FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding CategoriesDisplay}" FontSize="11" Foreground="#888888" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Close -->
+                    <Button Grid.Column="2" Classes="winBtn" Width="36" Height="36"
+                            Click="Close_Click" VerticalAlignment="Top">
+                        <TextBlock Text="✕" FontSize="14"/>
+                    </Button>
+                </Grid>
+
+                <!-- ===== BODY: Two columns ===== -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto,340" Margin="0,20,0,0">
+
+                    <!-- Left: Description + Gallery -->
+                    <Border Grid.Column="0" Background="#20000000" CornerRadius="12" ClipToBounds="True">
+                        <Panel>
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        IsVisible="{Binding IsLoading}" Spacing="8">
+                                <TextBlock Text="Загрузка описания..." Foreground="#888888" FontSize="14"/>
+                            </StackPanel>
+
+                            <ScrollViewer Padding="20" IsVisible="{Binding !IsLoading}">
+                                <StackPanel Spacing="16">
+
+                                    <!-- Body preview -->
+                                    <TextBlock Text="{Binding BodyPreview}"
+                                               FontSize="13" Foreground="#DDDDDD" LineHeight="20"
+                                               TextWrapping="Wrap"/>
+
+                                    <!-- Gallery -->
+                                    <StackPanel Spacing="10" IsVisible="{Binding HasGallery}">
+                                        <TextBlock Text="Скриншоты" FontSize="14" FontWeight="Bold" Foreground="White"/>
+                                        <ItemsControl ItemsSource="{Binding Gallery}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="models:ModrinthGalleryImage">
+                                                    <Border CornerRadius="10" ClipToBounds="True" Margin="0,4"
+                                                            Background="#181225">
+                                                        <StackPanel>
+                                                            <Image asyncImageLoader:ImageLoader.Source="{Binding Url}"
+                                                                   Stretch="UniformToFill" MaxHeight="220"/>
+                                                            <TextBlock Text="{Binding Title}" FontSize="12"
+                                                                       Foreground="#DDDDDD" Padding="10,6"
+                                                                       IsVisible="{Binding Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                    <!-- Links -->
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Text="Ссылки" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,8,0,4"/>
+
+                                        <Button Classes="linkBtn" Click="OpenModrinth_Click"
+                                                HorizontalAlignment="Left">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="M10 6H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-4h-2v4H6V8h4V6zm4-3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                                          Width="16" Height="16" Foreground="#B388FF"/>
+                                                <TextBlock Text="Открыть на Modrinth" FontSize="12" Foreground="#B388FF"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button Classes="linkBtn" Click="OpenSource_Click"
+                                                HorizontalAlignment="Left" IsVisible="{Binding HasSource}">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"
+                                                          Width="16" Height="16" Foreground="#66BB6A"/>
+                                                <TextBlock Text="Исходный код" FontSize="12" Foreground="#66BB6A"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button Classes="linkBtn" Click="OpenIssues_Click"
+                                                HorizontalAlignment="Left" IsVisible="{Binding HasIssues}">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM12 17.3c-.72 0-1.3-.58-1.3-1.3s.58-1.3 1.3-1.3 1.3.58 1.3 1.3-.58 1.3-1.3 1.3zm1-4.3h-2V7h2v6z"
+                                                          Width="16" Height="16" Foreground="#FF9800"/>
+                                                <TextBlock Text="Баг-репорты" FontSize="12" Foreground="#FFB74D"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button Classes="linkBtn" Click="OpenWiki_Click"
+                                                HorizontalAlignment="Left" IsVisible="{Binding HasWiki}">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="M19 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h11v12zM3 6H1v14c0 1.1.9 2 2 2h14v-2H3V6z"
+                                                          Width="16" Height="16" Foreground="#4FC3F7"/>
+                                                <TextBlock Text="Wiki" FontSize="12" Foreground="#4FC3F7"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Panel>
+                    </Border>
+
+                    <!-- Divider -->
+                    <Border Grid.Column="1" Width="1" Background="#20FFFFFF" Margin="12,0"/>
+
+                    <!-- Right: Versions -->
+                    <Grid Grid.Column="2" RowDefinitions="Auto,Auto,*">
+
+                        <StackPanel Grid.Row="0" Spacing="8">
+                            <TextBlock Text="Версии" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                            <CheckBox Content="Только для текущей версии"
+                                      IsChecked="{Binding FilterByCurrentVersion}"/>
+                        </StackPanel>
+
+                        <Rectangle Grid.Row="1" Height="1" Fill="#20FFFFFF" Margin="0,12"/>
+
+                        <ScrollViewer Grid.Row="2" Padding="0,0,4,0">
+                            <ItemsControl ItemsSource="{Binding Versions}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="models:ModrinthVersion">
+                                        <Button Classes.versionCardSelected="{Binding IsSelected}"
+                                                Classes.versionCard="{Binding !IsSelected}"
+                                                Click="VersionSelect_Click" Tag="{Binding}"
+                                                Margin="0,3">
+                                            <StackPanel Spacing="4">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <TextBlock Text="{Binding VersionNumber}" FontSize="13"
+                                                               FontWeight="SemiBold" Foreground="White"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                    <Border Grid.Column="1" CornerRadius="4" Padding="6,2">
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="#307C4DFF"/>
+                                                        </Border.Background>
+                                                        <TextBlock Text="{Binding VersionType}" FontSize="9"
+                                                                   Foreground="#B388FF"
+                                                                   HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </Grid>
+                                                <TextBlock Text="{Binding GameVersionsDisplay}" FontSize="10"
+                                                           Foreground="#888888" TextTrimming="CharacterEllipsis"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <TextBlock Text="{Binding LoadersDisplay}" FontSize="10"
+                                                               Foreground="#66BB6A"/>
+                                                    <TextBlock Text="•" FontSize="10" Foreground="#444"/>
+                                                    <TextBlock Text="{Binding FileSizeDisplay}" FontSize="10"
+                                                               Foreground="#666666"/>
+                                                    <TextBlock Text="•" FontSize="10" Foreground="#444"/>
+                                                    <TextBlock Text="{Binding DatePublished}" FontSize="10"
+                                                               Foreground="#666666"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+
+                <!-- ===== FOOTER ===== -->
+                <Grid Grid.Row="2" Margin="0,16,0,0" ColumnDefinitions="*,Auto,Auto">
+                    <TextBlock Text="{Binding DownloadStatus}" Foreground="#B388FF" FontSize="13"
+                               VerticalAlignment="Center"/>
+
+                    <Button Grid.Column="1" Classes="settingsBtn" Click="Close_Click" Padding="24,0" Margin="0,0,10,0">
+                        <TextBlock Text="Закрыть" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Button Grid.Column="2" Classes="playBtn" Click="Install_Click"
+                            IsEnabled="{Binding CanInstall}" Padding="20,0" Height="44">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                <GradientStop Color="#7C4DFF" Offset="0"/>
+                                <GradientStop Color="#536DFE" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                      Foreground="White" Width="16" Height="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Установить" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Border>
+</UserControl>

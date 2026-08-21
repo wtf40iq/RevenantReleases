@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncherSetup.ViewModels"
+             x:Class="RevenantLauncherSetup.Views.WelcomePage"
+             x:DataType="vm:SetupViewModel">
+
+    <Border Classes="page">
+        <Grid RowDefinitions="*,Auto" Margin="40,30,40,30">
+
+            <!-- Content -->
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" Spacing="24">
+
+                <!-- Большой логотип -->
+                <Image Source="avares://RevenantLauncherSetup/Assets/launcher.png"
+                       Height="120" HorizontalAlignment="Center"
+                       Stretch="Uniform"/>
+
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <TextBlock Text="Добро пожаловать!" Classes="pageTitle"
+                               HorizontalAlignment="Center"/>
+
+                    <TextBlock TextAlignment="Center" MaxWidth="360" Classes="pageSubtitle">
+                        <Run Text="Сейчас будет установлен"/>
+                        <Run Text=" Revenant Launcher" FontWeight="SemiBold" Foreground="#B388FF"/>
+                        <Run Text=" — стильный и удобный лаунчер для Minecraft."/>
+                    </TextBlock>
+                </StackPanel>
+
+                <Border Classes="infoBox" MaxWidth="380" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V9h2v2z"
+                                  Width="18" Height="18" Foreground="#B388FF" VerticalAlignment="Center"/>
+                        <TextBlock Text="Установка не требует прав администратора"
+                                   Foreground="#DDDDDD" FontSize="12" VerticalAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
+            <!-- Кнопки -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                <Button Classes="primaryBtn" Click="Next_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <TextBlock Text="Начать" VerticalAlignment="Center"/>
+                        <PathIcon Data="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                                  Width="16" Height="16" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                            <GradientStop Color="#7C4DFF" Offset="0"/>
+                            <GradientStop Color="#536DFE" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

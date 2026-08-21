@@ -1,0 +1,115 @@
+name: Publish Revenant Launcher release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  RUNTIME: win-x64
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Read version from tag
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart('v', 'V')
+          $parsed = $null
+          if (-not [Version]::TryParse($version, [ref]$parsed)) {
+            throw "Tag must contain a semantic version, for example v1.2.2"
+          }
+          "VERSION=$version" >> $env:GITHUB_ENV
+          "VERSION4=$($parsed.Major).$($parsed.Minor).$($parsed.Build).0" >> $env:GITHUB_ENV
+          Write-Host "Publishing Revenant Launcher v$version"
+
+      - name: Restore
+        run: dotnet restore RevenantLauncher/RevenantLauncher.csproj
+
+      - name: Publish launcher
+        shell: pwsh
+        run: |
+          dotnet publish RevenantLauncher/RevenantLauncher.csproj `
+            --configuration Release `
+            --runtime $env:RUNTIME `
+            --self-contained true `
+            --output artifacts/launcher `
+            -p:Version=$env:VERSION `
+            -p:AssemblyVersion=$env:VERSION4 `
+            -p:FileVersion=$env:VERSION4
+
+      - name: Build installer payload
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path RevenantLauncherSetup/Assets | Out-Null
+          if (Test-Path RevenantLauncherSetup/Assets/payload.zip) {
+            Remove-Item RevenantLauncherSetup/Assets/payload.zip -Force
+          }
+          Compress-Archive -Path artifacts/launcher/* `
+            -DestinationPath RevenantLauncherSetup/Assets/payload.zip `
+            -CompressionLevel Optimal
+          Write-Host "Payload size: $((Get-Item RevenantLauncherSetup/Assets/payload.zip).Length) bytes"
+
+      - name: Publish self-contained installer
+        shell: pwsh
+        run: |
+          dotnet publish RevenantLauncherSetup/RevenantLauncherSetup.csproj `
+            --configuration Release `
+            --runtime $env:RUNTIME `
+            --self-contained true `
+            --output artifacts/installer `
+            -p:PublishSingleFile=true `
+            -p:EnableCompressionInSingleFile=false `
+            -p:Version=$env:VERSION `
+            -p:AssemblyVersion=$env:VERSION4 `
+            -p:FileVersion=$env:VERSION4
+
+      - name: Prepare release files
+        shell: pwsh
+        run: |
+          $exe = "artifacts/RevenantLauncherSetup-v$env:VERSION.exe"
+          Copy-Item artifacts/installer/RevenantLauncherSetup.exe $exe
+
+          @"
+          Revenant Launcher v$env:VERSION
+          =================================
+
+          Run RevenantLauncherSetup-v$env:VERSION.exe to install the launcher.
+          The launcher will check GitHub Releases and offer future updates automatically.
+
+          Your account, settings, history, mods and Minecraft versions are preserved during updates.
+          "@ | Set-Content -Path artifacts/README.txt -Encoding UTF8
+
+          Compress-Archive -Path $exe, artifacts/README.txt `
+            -DestinationPath "artifacts/RevenantLauncher-Setup-v$env:VERSION-win-x64.zip" `
+            -CompressionLevel Optimal
+
+          Get-FileHash $exe -Algorithm SHA256 | Format-List
+          Get-FileHash "artifacts/RevenantLauncher-Setup-v$env:VERSION-win-x64.zip" -Algorithm SHA256 | Format-List
+
+      - name: Publish GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" `
+            "artifacts/RevenantLauncherSetup-v$env:VERSION.exe" `
+            "artifacts/RevenantLauncher-Setup-v$env:VERSION-win-x64.zip" `
+            --repo "${{ github.repository }}" `
+            --title "Revenant Launcher v$env:VERSION" `
+            --generate-notes

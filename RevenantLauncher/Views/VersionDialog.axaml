@@ -1,0 +1,299 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             xmlns:models="using:RevenantLauncher.Models"
+             xmlns:behaviors="using:RevenantLauncher.Behaviors"
+             xmlns:conv="using:RevenantLauncher.Converters"
+             x:Class="RevenantLauncher.Views.VersionDialog"
+             x:DataType="vm:VersionDialogViewModel">
+
+    <UserControl.Resources>
+        <conv:StringToBrushConverter x:Key="StrBrush"/>
+        <LinearGradientBrush x:Key="TabActiveBrush" StartPoint="0%,50%" EndPoint="100%,50%">
+            <GradientStop Color="#7C4DFF" Offset="0"/>
+            <GradientStop Color="#6559E8" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <!-- Сегментированные вкладки загрузчиков -->
+        <Style Selector="Button.verTab">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.verTab:pointerover">
+            <Setter Property="Foreground" Value="#DDDDDD"/>
+        </Style>
+        <Style Selector="Button.verTabActive">
+            <Setter Property="Background" Value="{StaticResource TabActiveBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Виртуализированные списки версий -->
+        <Style Selector="ListBox.versionsListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+        <Style Selector="ListBox.versionsListBox ListBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style Selector="ListBox.versionsListBox ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style Selector="ListBox.versionsListBox ListBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Border x:Name="Backdrop" Background="#B0000000" ClipToBounds="True">
+        <Border x:Name="DialogPanel"
+                Background="{DynamicResource DialogBackground}"
+                CornerRadius="{DynamicResource SectionCornerRadius}"
+                BorderBrush="{DynamicResource DialogBorderBrush}"
+                BorderThickness="1"
+                Width="880" Height="620"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BoxShadow="0 20 60 0 #80000000">
+            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="28">
+
+                <!-- ===== HEADER ===== -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="Выбор версии" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="Minecraft · Forge · Fabric" FontSize="12" Foreground="#888888"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Classes="winBtn" Width="36" Height="36" Click="Close_Click"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="✕" FontSize="14"/>
+                    </Button>
+                </Grid>
+
+                <!-- ===== SEGMENTED TABS ===== -->
+                <Border Grid.Row="1" Background="#20000000" CornerRadius="14" Padding="4" Margin="0,18,0,0">
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Button Grid.Column="0" Classes.verTabActive="{Binding IsVanillaTab}" Classes.verTab="{Binding !IsVanillaTab}"
+                                Click="TabVanilla_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <Border Width="18" Height="18" Background="#66BB6A">
+                                    <Border.OpacityMask>
+                                        <ImageBrush Source="avares://RevenantLauncher/Assets/vanilla.png" Stretch="Uniform"/>
+                                    </Border.OpacityMask>
+                                </Border>
+                                <TextBlock Text="Vanilla" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="1" Classes.verTabActive="{Binding IsForgeTab}" Classes.verTab="{Binding !IsForgeTab}"
+                                Click="TabForge_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <Border Width="18" Height="18" Background="#FF7043">
+                                    <Border.OpacityMask>
+                                        <ImageBrush Source="avares://RevenantLauncher/Assets/forge.png" Stretch="Uniform"/>
+                                    </Border.OpacityMask>
+                                </Border>
+                                <TextBlock Text="Forge" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="2" Classes.verTabActive="{Binding IsFabricTab}" Classes.verTab="{Binding !IsFabricTab}"
+                                Click="TabFabric_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                <Border Width="18" Height="18" Background="#4DD0E1">
+                                    <Border.OpacityMask>
+                                        <ImageBrush Source="avares://RevenantLauncher/Assets/fabric.png" Stretch="Uniform"/>
+                                    </Border.OpacityMask>
+                                </Border>
+                                <TextBlock Text="Fabric" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- ===== SEARCH + FILTER CHIPS ===== -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,14,0,12">
+                    <Border Grid.Column="0" Classes="searchBox">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <PathIcon Data="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                      Foreground="#888888" Width="18" Height="18" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Text="{Binding SearchText}"
+                                     Watermark="Поиск версии..."
+                                     Background="Transparent" BorderThickness="0"
+                                     Foreground="White" FontSize="14"
+                                     VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        </Grid>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" Margin="12,0,0,0"
+                                VerticalAlignment="Center">
+                        <Button Classes.tabActive="{Binding OnlyInstalled}" Classes.tab="{Binding !OnlyInstalled}"
+                                Click="ChipInstalled_Click" Padding="12,0">
+                            <TextBlock Text="Установленные" VerticalAlignment="Center"/>
+                        </Button>
+                        <StackPanel Orientation="Horizontal" Spacing="6" IsVisible="{Binding ShowFilters}">
+                            <Button Classes.tabActive="{Binding ShowReleases}" Classes.tab="{Binding !ShowReleases}"
+                                    Click="ChipReleases_Click" Padding="12,0">
+                                <TextBlock Text="Release" VerticalAlignment="Center"/>
+                            </Button>
+                            <Button Classes.tabActive="{Binding ShowSnapshots}" Classes.tab="{Binding !ShowSnapshots}"
+                                    Click="ChipSnapshots_Click" Padding="12,0">
+                                <TextBlock Text="Snapshot" VerticalAlignment="Center"/>
+                            </Button>
+                            <Button Classes.tabActive="{Binding ShowOld}" Classes.tab="{Binding !ShowOld}"
+                                    Click="ChipOld_Click" Padding="12,0">
+                                <TextBlock Text="Old" VerticalAlignment="Center"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- ===== LISTS ===== -->
+                <Grid Grid.Row="3" ColumnDefinitions="*,Auto,*">
+
+                    <!-- MC versions -->
+                    <Border Grid.Column="0" Background="#20000000" CornerRadius="12" ClipToBounds="True">
+                        <ListBox Classes="versionsListBox" ItemsSource="{Binding DisplayedVersions}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="models:GameVersion">
+                                        <Button Classes="versionItem" behaviors:StaggeredAnimationBehavior.IsEnabled="True"
+                                                Click="VersionItem_Click" Tag="{Binding}">
+                                            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                                <Border Width="40" Height="40" CornerRadius="10"
+                                                        Background="#241839" VerticalAlignment="Center">
+                                                    <Border Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                            Background="{Binding TypeIconColor, Converter={StaticResource StrBrush}}">
+                                                        <Border.OpacityMask>
+                                                            <ImageBrush Source="{Binding TypeIconBitmap}" Stretch="Uniform"/>
+                                                        </Border.OpacityMask>
+                                                    </Border>
+                                                </Border>
+                                                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold"
+                                                               Foreground="White"/>
+                                                    <TextBlock Text="{Binding TypeLabel}" FontSize="11" Foreground="#888888"/>
+                                                </StackPanel>
+
+                                                <Border Grid.Column="2" Classes="installedBadge"
+                                                        VerticalAlignment="Center" Margin="8,0"
+                                                        IsVisible="{Binding IsInstalled}">
+                                                    <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                                        <PathIcon Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                                                                  Width="10" Height="10" Foreground="#88DD99"/>
+                                                        <TextBlock Text="Установлено" FontSize="9" Foreground="#88DD99"/>
+                                                        <TextBlock Text="·" FontSize="9" Foreground="#88DD99"/>
+                                                        <TextBlock Text="{Binding InstalledSizeDisplay}" FontSize="9" Foreground="#88DD99"/>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <PathIcon Grid.Column="3"
+                                                          Data="M9 6l6 6-6 6"
+                                                          Foreground="#555555" Width="16" Height="16"
+                                                          VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ListBox>
+                    </Border>
+
+                    <Border Grid.Column="1" Width="1" Background="#20FFFFFF" Margin="12,0"
+                            IsVisible="{Binding IsLoaderMode}"/>
+
+                    <!-- Loader versions -->
+                    <Border Grid.Column="2" Background="#20000000" CornerRadius="12" ClipToBounds="True"
+                            IsVisible="{Binding IsLoaderMode}">
+                        <Grid RowDefinitions="Auto,Auto,*">
+
+                            <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Margin="12,12,12,0">
+                                <Button Grid.Column="0" Classes="winBtn" Width="30" Height="30"
+                                        Click="BackToMc_Click" Margin="0,0,10,0">
+                                    <PathIcon Data="M15 6l-6 6 6 6" Width="14" Height="14" Foreground="White"/>
+                                </Button>
+                                <TextBlock Grid.Column="1" Text="{Binding LoaderPanelTitle}"
+                                           FontSize="14" FontWeight="SemiBold" Foreground="White"
+                                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </Grid>
+
+                            <Button Grid.Row="1" Classes="addAccountBtn" Margin="12,10,12,8"
+                                    Click="UseLatest_Click">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                                              Foreground="#B388FF" Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Использовать последнюю" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <ScrollViewer Grid.Row="2" Padding="8" Margin="0,0,0,8">
+                                <StackPanel>
+                                    <TextBlock Text="Загрузка..." Foreground="#888888" FontSize="13"
+                                               HorizontalAlignment="Center" Margin="0,20,0,0"
+                                               IsVisible="{Binding IsLoadingLoaders}"/>
+                                    <ItemsControl ItemsSource="{Binding LoaderVersions}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="vm:LoaderVersionItem">
+                                                <Button Classes="versionItem" behaviors:StaggeredAnimationBehavior.IsEnabled="True"
+                                                        Click="LoaderItem_Click" Tag="{Binding}">
+                                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                                        <Border Width="32" Height="32" CornerRadius="8"
+                                                                Background="#241839" VerticalAlignment="Center">
+                                                            <Border Width="17" Height="17" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                    Background="{Binding IconColor, Converter={StaticResource StrBrush}}">
+                                                                <Border.OpacityMask>
+                                                                    <ImageBrush Source="{Binding IconBitmap}" Stretch="Uniform"/>
+                                                                </Border.OpacityMask>
+                                                            </Border>
+                                                        </Border>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Version}"
+                                                                   FontSize="13" FontWeight="SemiBold"
+                                                                   Foreground="White"
+                                                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                        <PathIcon Grid.Column="2"
+                                                                  Data="M9 6l6 6-6 6"
+                                                                  Foreground="#555555" Width="14" Height="14"
+                                                                  VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- ===== FOOTER ===== -->
+                <Grid Grid.Row="4" Margin="0,14,0,0" ColumnDefinitions="*,Auto">
+                    <TextBlock Text="{Binding DisplayedVersions.Count, StringFormat='Найдено: {0}'}"
+                               Foreground="#888888" FontSize="12" VerticalAlignment="Center"/>
+
+                    <Button Grid.Column="1" Classes="settingsBtn" Click="Close_Click" Padding="32,0">
+                        <TextBlock Text="Отмена" FontSize="14"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Border>
+</UserControl>

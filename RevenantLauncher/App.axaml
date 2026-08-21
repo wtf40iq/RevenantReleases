@@ -1,0 +1,18 @@
+﻿<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="RevenantLauncher.App"
+             xmlns:local="using:RevenantLauncher"
+             RequestedThemeVariant="Dark">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <FontFamily x:Key="InterFont">avares://RevenantLauncher/Assets/Fonts/ofont.ru_Arteks.ttf#Arteks Black</FontFamily>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://RevenantLauncher/Styles/MainStyles.axaml"/>
+    </Application.Styles>
+</Application>

@@ -1,0 +1,392 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RevenantLauncher.ViewModels"
+        xmlns:views="using:RevenantLauncher.Views"
+        xmlns:models="using:RevenantLauncher.Models"
+        xmlns:services="using:RevenantLauncher.Services"
+        x:Class="RevenantLauncher.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Name="RootWindow"
+        Title="Revenant Launcher"
+        Width="1328" Height="848"
+        MinWidth="1328" MinHeight="848"
+        WindowStartupLocation="CenterScreen"
+        SystemDecorations="None"
+        Background="Transparent"
+        TransparencyLevelHint="Transparent"
+        CanResize="False"
+        Icon="avares://RevenantLauncher/Assets/Rlogo.png">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <!-- Margin 24 — место под собственную скруглённую тень: системная тень у
+         прозрачных окон квадратная и выпирает за скруглённые углы -->
+    <Border x:Name="RootBorder" CornerRadius="20" ClipToBounds="True"
+            Background="{DynamicResource WindowBackground}"
+            BorderBrush="{DynamicResource WindowBorderBrush}" BorderThickness="1"
+            Margin="24" BoxShadow="0 6 18 0 #AA000000"
+            PointerPressed="Window_PointerPressed">
+        <Panel>
+
+<Grid>
+    <!-- Оптимизированный кешируемый фон через ImageBrush -->
+    <Border x:Name="BannerBorder" IsHitTestVisible="False">
+        <Border.Background>
+            <ImageBrush Source="avares://RevenantLauncher/Assets/mainbanner/banner1.jpg"
+                        Stretch="UniformToFill" Opacity="{DynamicResource BannerOpacity}"/>
+        </Border.Background>
+    </Border>
+
+    <Border IsHitTestVisible="False" Background="{DynamicResource OverlayGradient}"/>
+
+                <Border Width="130" HorizontalAlignment="Left" IsHitTestVisible="False"
+                        Background="{DynamicResource SidebarGradient}"
+                        BorderBrush="{DynamicResource SidebarBorderBrush}" BorderThickness="0,0,1,0"/>
+
+                    <Border VerticalAlignment="Bottom" Height="200" IsHitTestVisible="False"
+                            Background="{DynamicResource BottomGradient}"/>
+
+                <Grid ColumnDefinitions="130,*">
+
+                    <!-- SIDEBAR -->
+                    <Grid Grid.Column="0" RowDefinitions="Auto,*">
+
+                        <Border Grid.Row="0" Margin="0,18,0,0" HorizontalAlignment="Center">
+                            <Image x:Name="SidebarLogoImage" Source="avares://RevenantLauncher/Assets/fonlogo.png" Width="72" Height="72"/>
+                        </Border>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8" Margin="0,10">
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavHomeActive}" Classes.navBtn="{Binding !NavHomeActive}" Click="NavHome_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="Главная" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavHomeActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavModsActive}" Classes.navBtn="{Binding !NavModsActive}" Click="NavMods_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="Моды" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavModsActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavResourcesActive}" Classes.navBtn="{Binding !NavResourcesActive}" Click="NavResources_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z" Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="Ресурспаки" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavResourcesActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavWorldsActive}" Classes.navBtn="{Binding !NavWorldsActive}" Click="NavWorlds_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="Миры" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavWorldsActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavCustomizationActive}" Classes.navBtn="{Binding !NavCustomizationActive}" Click="NavCustomization_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="Кастомизация" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavCustomizationActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavHistoryActive}" Classes.navBtn="{Binding !NavHistoryActive}" Click="NavHistory_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                                                  Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="История" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavHistoryActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                    <Button Classes.navBtnActive="{Binding NavSettingsActive}" Classes.navBtn="{Binding !NavSettingsActive}" Click="NavSettings_Click" HorizontalAlignment="Center">
+                                        <PathIcon Data="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.611 3.611 0 0112 15.6z" Width="24" Height="24"/>
+                                    </Button>
+                                    <TextBlock Text="Настройки" FontSize="11" HorizontalAlignment="Center"
+                                               Foreground="{Binding NavSettingsActive, Converter={x:Static vm:NavColorConverter.Instance}}"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+
+                    <!-- MAIN -->
+                    <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto">
+
+                        <!-- TOP BAR -->
+                        <Grid Grid.Row="0" Margin="20,18,20,0" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto">
+
+                            <Button Grid.Column="0" Classes="topBarBtn" Margin="0,0,12,0" Name="AccountButton" Click="AccountButton_Click">
+                                <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                    <PathIcon Data="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                              Foreground="#B0B0B0" Width="18" Height="18" VerticalAlignment="Center"/>
+                                    <StackPanel Spacing="0" VerticalAlignment="Center">
+                                        <TextBlock Text="Аккаунт" FontSize="10" Foreground="#888888" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding SelectedAccount}" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <PathIcon Data="M7 10l5 5 5-5z" Foreground="#888888" Width="14" Height="14" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Grid.Column="1" Classes="topBarBtn" Margin="0,0,12,0" Click="VersionButton_Click">
+                                <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                    <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                                              Foreground="#66BB6A" Width="18" Height="18" VerticalAlignment="Center"/>
+                                    <StackPanel Spacing="0" VerticalAlignment="Center">
+                                        <TextBlock Text="Версия" FontSize="10" Foreground="#888888" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding SelectedVersion}" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <PathIcon Data="M7 10l5 5 5-5z" Foreground="#888888" Width="14" Height="14" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Border Grid.Column="2"/>
+
+                            <Border Grid.Column="3" Background="{DynamicResource ControlBackground}" CornerRadius="25" BorderBrush="{DynamicResource ButtonBorderBrush}" BorderThickness="1"
+                                    Padding="20,0" Height="50" Margin="0,0,16,0" VerticalAlignment="Center">
+                                <StackPanel Spacing="0" VerticalAlignment="Center">
+                                    <TextBlock Text="Статус" FontSize="10" Foreground="#888888" HorizontalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                        <Ellipse Width="8" Height="8" Fill="#66BB6A" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding StatusText}" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Button Grid.Column="4" Classes="winBtn" Margin="0,0,8,0" Click="Minimize_Click">
+                                <TextBlock Text="—" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-3,0,0"/>
+                            </Button>
+
+                            <Button Grid.Column="5" Classes="winBtnClose" Click="Close_Click">
+                                <TextBlock Text="✕" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- ===== CENTER (Pages) ===== -->
+                        <Panel Grid.Row="1">
+
+                            <!-- HOME -->
+                            <Grid Classes="pageContent" Margin="40,20,40,0" IsVisible="{Binding IsHomePage}">
+                                <StackPanel VerticalAlignment="Center" MaxWidth="700" HorizontalAlignment="Left">
+                                    <Image x:Name="HeroLogoImage" Source="avares://RevenantLauncher/Assets/launcher.png" Height="200" HorizontalAlignment="Left" Margin="-78,10,0,-15" Stretch="Uniform"/>
+                                    <TextBlock Text="Твой мир. Твои правила. Твой лаунчер." FontSize="20" FontWeight="SemiBold" Margin="0,8,0,8"/>
+                                    <TextBlock TextWrapping="Wrap" FontSize="14" Foreground="#B0B0B0" Margin="0,0,0,24" LineHeight="22">
+                                        <Run Text="Запускай, выбирай, настраивай — всё в одном месте."/>
+                                        <LineBreak/>
+                                        <Run Text="Revenant Launcher создан для тех, кто ценит свободу и стиль."/>
+                                    </TextBlock>
+
+                                    <StackPanel Orientation="Horizontal" Spacing="12">
+
+                                        <!-- BIG PLAY / DOWNLOAD BUTTON -->
+                                        <Button Classes="playBtnBig" Click="Play_Click" IsEnabled="{Binding CanLaunch}">
+                                            <Button.Background>
+                                                <MultiBinding Converter="{x:Static vm:PlayButtonBrushConverter.Instance}">
+                                                    <Binding Path="IsCurrentVersionInstalled"/>
+                                                    <Binding Path="IsGameRunning"/>
+                                                </MultiBinding>
+                                            </Button.Background>
+                                            <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                                <!-- Play icon (когда установлена) -->
+                                                <PathIcon Data="M8 5v14l11-7z" Foreground="White" Width="22" Height="22" VerticalAlignment="Center"
+                                                          IsVisible="{Binding IsCurrentVersionInstalled}"/>
+                                                <!-- Download icon (когда не установлена) -->
+                                                <PathIcon Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" Foreground="White" Width="22" Height="22" VerticalAlignment="Center"
+                                                          IsVisible="{Binding IsNotInstalled}"/>
+                                                <TextBlock Text="{Binding PlayButtonText}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <!-- SMALL SETTINGS BUTTON (шестерёнка) -->
+                                        <Button Classes="settingsGearBtn" Click="NavSettings_Click" ToolTip.Tip="Настройки">
+                                            <PathIcon Data="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.611 3.611 0 0112 15.6z"
+                                                      Width="22" Height="22" Foreground="White"/>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <Border Classes="accountPanel" IsVisible="{Binding IsAccountPanelOpen}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Width="320" MaxHeight="500" Margin="0,20,20,0">
+                                    <StackPanel Spacing="12">
+                                        <Grid ColumnDefinitions="*,Auto,Auto">
+                                            <TextBlock Text="Сменить аккаунт" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="1" Classes="winBtn" Width="32" Height="32" Margin="0,0,4,0" Click="AccountConfirm_Click">
+                                                <PathIcon Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" Foreground="White" Width="16" Height="16"/>
+                                            </Button>
+                                            <Button Grid.Column="2" Classes="winBtn" Width="32" Height="32" Click="AccountPanelClose_Click">
+                                                <TextBlock Text="✕" FontSize="12"/>
+                                            </Button>
+                                        </Grid>
+
+                                        <ScrollViewer MaxHeight="340" HorizontalScrollBarVisibility="Disabled">
+                                            <ItemsControl ItemsSource="{Binding Accounts}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="models:AccountModel">
+                                                        <Grid Margin="0,2">
+                                                            <Button Classes.accountItemSelected="{Binding IsSelected}"
+                                                                    Classes.accountItem="{Binding !IsSelected}"
+                                                                    Click="AccountItem_Click" Tag="{Binding}">
+                                                                <Grid ColumnDefinitions="44,*,Auto,Auto">
+                                                                    <Border Width="40" Height="40" CornerRadius="8" ClipToBounds="True" Background="#2A1F3F">
+                                                                        <Image Source="{Binding Source={x:Static services:AssetImageService.Instance}, Path=Logo}" Width="32" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                    <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding Username}" FontSize="14" FontWeight="SemiBold"/>
+                                                                        <TextBlock Text="{Binding Status}" FontSize="12" Foreground="#888888"/>
+                                                                    </StackPanel>
+                                                                    <PathIcon Grid.Column="2" Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                                                                              Foreground="#7C4DFF" Width="18" Height="18"
+                                                                              IsVisible="{Binding IsSelected}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                                    <Button Grid.Column="3" Classes="deleteAccountBtn" Click="DeleteAccount_Click" Tag="{Binding}" VerticalAlignment="Center">
+                                                                        <PathIcon Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" Width="14" Height="14"/>
+                                                                    </Button>
+                                                                </Grid>
+                                                            </Button>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+
+                                        <Button Classes="addAccountBtn" Click="AddAccount_Click">
+                                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                                <TextBlock Text="+" FontSize="18" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Добавить аккаунт" FontSize="14" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!-- SETTINGS -->
+                            <ContentControl Classes="pageContent" Content="{Binding SettingsViewModel}" IsVisible="{Binding IsSettingsPage}"/>
+
+                            <!-- ACCOUNT -->
+                            <ContentControl Classes="pageContent" Content="{Binding AccountViewModel}" IsVisible="{Binding IsAccountPage}"/>
+
+                            <!-- CUSTOMIZATION -->
+                            <ContentControl Classes="pageContent" Content="{Binding CustomizationViewModel}" IsVisible="{Binding IsCustomizationPage}"/>
+
+                            <!-- MODS -->
+                            <ContentControl Classes="pageContent" Content="{Binding ModsViewModel}" IsVisible="{Binding IsModsPage}"/>
+
+                            <!-- HISTORY -->
+                            <ContentControl Classes="pageContent" Content="{Binding HistoryViewModel}" IsVisible="{Binding IsHistoryPage}"/>
+
+                            <!-- RESOURCES -->
+                            <ContentControl Classes="pageContent" Content="{Binding ResourcePacksViewModel}" IsVisible="{Binding IsResourcesPage}"/>
+
+                            <!-- WORLDS -->
+                            <ContentControl Classes="pageContent" Content="{Binding WorldsViewModel}" IsVisible="{Binding IsWorldsPage}"/>
+
+                            <!-- FRIENDS -->
+                            <ContentControl Classes="pageContent" Content="{Binding FriendsViewModel}" IsVisible="{Binding IsFriendsPage}"/>
+                        </Panel>
+
+                        <!-- BOTTOM -->
+                        <Grid Grid.Row="2" Margin="40,0,40,28" ColumnDefinitions="*,Auto" IsVisible="{Binding IsHomePage}">
+                            <Border Grid.Column="0" Classes="quickLaunch" IsVisible="{Binding IsLaunching}">
+                                <StackPanel VerticalAlignment="Center" Spacing="8">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Text="{Binding LaunchStatus}" FontSize="13" Foreground="White" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding LaunchProgressPercent, StringFormat={}{0:F0}%}" FontSize="13" FontWeight="SemiBold" Foreground="#B388FF" Margin="8,0,0,0"/>
+                                    </Grid>
+                                    <ProgressBar Value="{Binding LaunchProgressPercent}" Maximum="100" Height="8" CornerRadius="4" Background="#30FFFFFF" Foreground="#7C4DFF"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- FRIENDS + ACCOUNT CHIPS (справа снизу, только на главной) -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" Margin="20,0,0,0">
+
+                                <!-- FRIENDS CHIP -->
+                                <Border Classes="accountChipCard">
+                                    <Button Classes="accountChipBtn" Click="NavFriends_Click" ToolTip.Tip="Друзья">
+                                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                            <Grid Width="38" Height="38">
+                                                <Border Width="36" Height="36" CornerRadius="18" ClipToBounds="True">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                            <GradientStop Color="#7C4DFF" Offset="0"/>
+                                                            <GradientStop Color="#536DFE" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                    <PathIcon Data="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
+                                                              Foreground="White" Width="18" Height="18"/>
+                                                </Border>
+                                                <!-- Бейдж с числом новых заявок -->
+                                                <Border IsVisible="{Binding HasFriendRequests}"
+                                                        Background="#FF5252" CornerRadius="9"
+                                                        MinWidth="18" Height="18" Padding="4,0"
+                                                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-3,-3,0"
+                                                        BorderBrush="#33000000" BorderThickness="1"
+                                                        ToolTip.Tip="{Binding FriendRequestCount, StringFormat='Новых заявок: {0}'}">
+                                                    <TextBlock Text="{Binding FriendRequestBadgeText}" FontSize="10" FontWeight="Bold"
+                                                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                            <StackPanel Spacing="0" VerticalAlignment="Center">
+                                                <TextBlock Text="Друзья" FontSize="13" FontWeight="SemiBold"
+                                                           Foreground="White"/>
+                                                <TextBlock Text="Игроки и активность" FontSize="10" Foreground="#888888"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+
+                                <!-- REVENANT ACCOUNT CHIP -->
+                                <Border Classes="accountChipCard">
+                                    <Button Classes="accountChipBtn" Click="NavAccount_Click" ToolTip.Tip="Профиль Revenant">
+                                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                            <Border Width="36" Height="36" CornerRadius="18" ClipToBounds="True">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                                        <GradientStop Color="#7C4DFF" Offset="0"/>
+                                                        <GradientStop Color="#536DFE" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <TextBlock Text="{Binding RevenantInitial}" FontSize="16" FontWeight="Bold"
+                                                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <StackPanel Spacing="0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding RevenantUsername}" FontSize="13" FontWeight="SemiBold"
+                                                           Foreground="White" TextTrimming="CharacterEllipsis" MaxWidth="180"/>
+                                                <TextBlock Text="Профиль Revenant" FontSize="10" Foreground="#888888"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+
+                <!-- ===== DIALOGS ===== -->
+<ContentControl Classes="dialogWrapper" Content="{Binding VersionDialog}" IsVisible="{Binding IsVersionDialogOpen}"/>
+<ContentControl Classes="dialogWrapper" Content="{Binding AddAccountDialog}" IsVisible="{Binding IsAddAccountDialogOpen}"/>
+<ContentControl Classes="dialogWrapper" Content="{Binding ModDetailsDialog}" IsVisible="{Binding IsModDetailsOpen}"/>
+<ContentControl Classes="dialogWrapper" Content="{Binding ResourcePackDetailsDialog}" IsVisible="{Binding IsResourcePackDetailsOpen}"/>
+<ContentControl Classes="dialogWrapper" Content="{Binding WorldsConfirmDialog}" IsVisible="{Binding IsWorldsConfirmOpen}"/>
+<ContentControl Classes="dialogWrapper" Content="{Binding DependencyDialog}" IsVisible="{Binding IsDependencyDialogOpen}"/>
+<ContentControl Classes="dialogWrapper" Content="{Binding ConfirmDialog}" IsVisible="{Binding IsConfirmDialogOpen}"/>
+
+            <!-- ===== TOASTS ===== -->
+            <ContentControl Content="{Binding ToastContainer}" IsHitTestVisible="True"/>
+
+        </Panel>
+    </Border>
+
+</Window>

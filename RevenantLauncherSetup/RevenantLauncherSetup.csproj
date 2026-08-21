@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<NoWarn>$(NoWarn);CS0618;AVLN3000;CA1416</NoWarn>
+		<ApplicationIcon>Assets\Rlogo.ico</ApplicationIcon>
+		<Product>Revenant Launcher Setup</Product>
+		<AssemblyVersion>1.2.1.0</AssemblyVersion>
+		<FileVersion>1.2.1.0</FileVersion>
+		<Version>1.2.1</Version>
+		<Company>lotesnowhallen</Company>
+		<Copyright>© 2026 lotesnowhallen</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.2.7" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.2.7" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.7" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.7" />
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.2.7" Condition="'$(Configuration)' == 'Debug'" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" Exclude="Assets\Rlogo.ico;Assets\payload.zip" />
+		<AvaloniaResource Include="Styles\**" />
+		<None Remove="Assets\Rlogo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Assets\payload.zip" Condition="Exists('Assets\payload.zip')">
+			<LogicalName>payload.zip</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,61 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncherSetup.ViewModels"
+             x:Class="RevenantLauncherSetup.Views.UninstallFinishPage"
+             x:DataType="vm:SetupViewModel">
+
+    <Border Classes="page">
+        <Grid RowDefinitions="*,Auto" Margin="40,30,40,30">
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" Spacing="24">
+
+                <Panel HorizontalAlignment="Center">
+                    <Border Width="110" Height="110" CornerRadius="55"
+                            Background="#3066BB6A" BorderBrush="#6066BB6A" BorderThickness="2"
+                            IsVisible="{Binding !InstallFailed}">
+                        <PathIcon Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                                  Width="56" Height="56" Foreground="#66BB6A"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <Border Width="110" Height="110" CornerRadius="55"
+                            Background="#30FF6666" BorderBrush="#60FF6666" BorderThickness="2"
+                            IsVisible="{Binding InstallFailed}">
+                        <PathIcon Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  Width="56" Height="56" Foreground="#FF6666"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Panel>
+
+                <StackPanel Spacing="12" HorizontalAlignment="Center">
+                    <TextBlock Text="Удаление завершено" Classes="pageTitle"
+                               HorizontalAlignment="Center" IsVisible="{Binding !InstallFailed}"/>
+                    <TextBlock Text="Revenant Launcher был удалён с вашего компьютера."
+                               Classes="pageSubtitle" TextAlignment="Center"
+                               IsVisible="{Binding !InstallFailed}"/>
+
+                    <TextBlock Text="Ошибка удаления" Classes="pageTitle"
+                               HorizontalAlignment="Center" Foreground="#FF6666"
+                               IsVisible="{Binding InstallFailed}"/>
+                    <TextBlock Text="{Binding ErrorMessage}" Classes="pageSubtitle"
+                               TextAlignment="Center" MaxWidth="380"
+                               Foreground="#FFAAAA" IsVisible="{Binding InstallFailed}"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+                <Button Classes="primaryBtn" Click="Close_Click">
+                    <TextBlock Text="Закрыть" VerticalAlignment="Center"/>
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                            <GradientStop Color="#7C4DFF" Offset="0"/>
+                            <GradientStop Color="#536DFE" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

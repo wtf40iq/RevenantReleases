@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             xmlns:models="using:RevenantLauncher.Models"
+             xmlns:converters="using:RevenantLauncher.Converters"
+             xmlns:behaviors="using:RevenantLauncher.Behaviors"
+             x:Class="RevenantLauncher.Views.ToastContainer"
+             x:DataType="vm:ToastContainerViewModel"
+             IsHitTestVisible="True">
+
+    <UserControl.Resources>
+        <converters:StringToBrushConverter x:Key="StringToBrush"/>
+    </UserControl.Resources>
+
+    <ItemsControl ItemsSource="{Binding Toasts}"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom"
+                  Margin="0,0,20,20">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Vertical" Spacing="10"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="models:ToastNotification">
+                <Border Classes="toast" Width="360" MinHeight="70" Margin="0,4" ClipToBounds="True"
+                        Tag="{Binding}">
+                    <Border.Styles>
+                        <Style Selector="Border.toast">
+                            <Setter Property="Background" Value="{DynamicResource ToastBackground}"/>
+                            <Setter Property="CornerRadius" Value="12"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource DialogBorderBrush}"/>
+                            <Setter Property="Opacity" Value="0"/>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform X="400" Y="0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Transitions">
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.3" Easing="CubicEaseOut"/>
+                                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.4" Easing="BackEaseOut"/>
+                                </Transitions>
+                            </Setter>
+                        </Style>
+                    </Border.Styles>
+
+                    <Panel>
+                        <!-- В теме Glass рисует размытое стекло, в Standart ничего не рисует -->
+                        <behaviors:LiquidGlassLayer CornerRadius="12" IsHitTestVisible="False"/>
+
+                        <Grid RowDefinitions="*,Auto">
+                        <!-- Основной контент -->
+                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="14">
+                            <Border Grid.Column="0" Width="36" Height="36" CornerRadius="10"
+                                    VerticalAlignment="Top"
+                                    Background="{Binding BorderColor, Converter={StaticResource StringToBrush}}">
+                                <PathIcon Data="{Binding IconData}" Width="20" Height="20"
+                                          Foreground="{Binding IconColor, Converter={StaticResource StringToBrush}}"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Text="{Binding Title}" FontSize="14" FontWeight="SemiBold"
+                                           Foreground="White" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding Message}" FontSize="12" Foreground="#B0B0B0"
+                                           TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
+                                           IsVisible="{Binding Message, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="2" Classes="toastClose"
+                                    Click="Close_Click" Tag="{Binding}"
+                                    VerticalAlignment="Top">
+                                <PathIcon Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                          Width="14" Height="14" Foreground="#888888"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Полоска времени внизу -->
+                        <Border Grid.Row="1" Height="3" Background="#20FFFFFF" ClipToBounds="True">
+                            <Border HorizontalAlignment="Left" Height="3"
+                                    Width="{Binding TimeProgress, Converter={x:Static vm:ToastProgressToWidthConverter.Instance}}"
+                                    Background="{Binding AccentColor, Converter={StaticResource StringToBrush}}"/>
+                        </Border>
+                        </Grid>
+                    </Panel>
+                </Border>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

@@ -1,0 +1,267 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             x:Class="RevenantLauncher.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <Panel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,12,0">
+            <StackPanel Margin="40,20,40,100" Spacing="20" MaxWidth="900" HorizontalAlignment="Left">
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Настройки" FontSize="32" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="Настрой лаунчер под себя"
+                               FontSize="14" Foreground="#888888"/>
+                </StackPanel>
+
+                <!-- ===== GAME ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"
+                                      Width="20" Height="20" Foreground="#B388FF"/>
+                            <TextBlock Text="Игра" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel>
+                                    <TextBlock Text="Максимальная память (RAM)" FontSize="14" FontWeight="SemiBold"/>
+                                    <TextBlock Text="Сколько оперативной памяти выделять для игры" FontSize="12" Foreground="#888888"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="{Binding MaxRamGb, StringFormat={}{0} ГБ}"
+                                           FontSize="16" FontWeight="Bold" Foreground="#B388FF" VerticalAlignment="Center"/>
+                            </Grid>
+                        <Slider Name="MaxRamSlider" Value="{Binding MaxRam}" Minimum="1024" Maximum="{Binding MaxRamSliderMax}"
+                                TickFrequency="1024" IsSnapToTickEnabled="True"/>
+                            <TextBlock Text="{Binding TotalSystemRamGb, StringFormat='Доступно в системе: {0} ГБ'}"
+                                       FontSize="11" Foreground="#666666"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel>
+                                    <TextBlock Text="Минимальная память (RAM)" FontSize="14" FontWeight="SemiBold"/>
+                                    <TextBlock Text="Начальное выделение памяти" FontSize="12" Foreground="#888888"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="{Binding MinRamGb, StringFormat={}{0} ГБ}"
+                                           FontSize="16" FontWeight="Bold" Foreground="#B388FF" VerticalAlignment="Center"/>
+                            </Grid>
+                       <Slider Name="MinRamSlider" Value="{Binding MinRam}" Minimum="512" Maximum="{Binding MaxRam}"
+                      TickFrequency="512" IsSnapToTickEnabled="True"/>
+                        </StackPanel>
+
+                        <Rectangle Height="1" Fill="#20FFFFFF"/>
+
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="Разрешение окна игры" FontSize="14" FontWeight="SemiBold"/>
+                            <Grid ColumnDefinitions="*,Auto,*">
+                                <Border Classes="searchBox" Grid.Column="0" Height="44">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="Ширина:" Foreground="#888888" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBox Text="{Binding GameWindowWidth}" Width="80" Background="Transparent" BorderThickness="0"
+                                                 Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <TextBlock Grid.Column="1" Text="×" FontSize="18" Foreground="#666" Margin="12,0" VerticalAlignment="Center"/>
+                                <Border Classes="searchBox" Grid.Column="2" Height="44">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="Высота:" Foreground="#888888" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBox Text="{Binding GameWindowHeight}" Width="80" Background="Transparent" BorderThickness="0"
+                                                 Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <ToggleSwitch Content="Полноэкранный режим" IsChecked="{Binding Fullscreen}" Foreground="White"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== JAVA ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M8.85 18.56s-.94.55.66.73c1.94.23 2.94.2 5.08-.21 0 0 .57.35 1.35.66-4.79 2.05-10.83-.12-7.09-1.18M8.26 15.85s-1.05.78.55.94c2.08.2 3.72.22 6.55-.32 0 0 .39.4 1.01.62-5.79 1.7-12.24.13-8.11-1.24M13.24 11.24c1.18 1.36-.31 2.58-.31 2.58s3-1.55 1.62-3.49c-1.29-1.81-2.28-2.71 3.08-5.83 0 0-8.38 2.09-4.39 6.74M19.03 20.55s.69.57-.76.99c-2.75.83-11.45 1.08-13.86.03-.87-.38.76-.91 1.27-1.01.54-.11.85-.09.85-.09-.96-.68-6.21 1.34-2.67 1.91 9.66 1.57 17.61-.71 15.17-1.83"
+                                      Width="20" Height="20" Foreground="#FF9800"/>
+                            <TextBlock Text="Java" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ToggleSwitch Content="Автоопределение Java (рекомендуется)" IsChecked="{Binding AutoDetectJava}" Foreground="White"/>
+
+                        <StackPanel Spacing="8" IsEnabled="{Binding !AutoDetectJava}">
+                            <TextBlock Text="Путь к javaw.exe" FontSize="14" FontWeight="SemiBold"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Border Classes="searchBox" Height="44">
+                                    <TextBox Text="{Binding JavaPath}" Watermark="C:\Program Files\Java\jdk-17\bin\javaw.exe"
+                                             Background="Transparent" BorderThickness="0" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </Border>
+                                <Button Grid.Column="1" Classes="settingsBtn" Margin="10,0,0,0" Height="44" Click="BrowseJava_Click" Padding="16,0">
+                                    <TextBlock Text="Обзор..." FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Аргументы JVM" FontSize="14" FontWeight="SemiBold"/>
+                            <TextBlock Text="Дополнительные параметры для запуска Java" FontSize="12" Foreground="#888888"/>
+                            <Border Classes="searchBox" MinHeight="80" Padding="12,8">
+                                <TextBox Text="{Binding JvmArgs}" AcceptsReturn="True" TextWrapping="Wrap"
+                                         Background="Transparent" BorderThickness="0" Foreground="White" FontSize="13"
+                                         FontFamily="Consolas,monospace" VerticalAlignment="Top"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== LAUNCHER ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                                      Width="20" Height="20" Foreground="#66BB6A"/>
+                            <TextBlock Text="Лаунчер" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Папка Minecraft" FontSize="14" FontWeight="SemiBold"/>
+                            <Grid ColumnDefinitions="*,Auto,Auto">
+                                <Border Classes="searchBox" Height="44">
+                                    <TextBox Text="{Binding GameDirectory}" Background="Transparent" BorderThickness="0"
+                                             Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </Border>
+                                <Button Grid.Column="1" Classes="settingsBtn" Margin="10,0,0,0" Height="44" Click="BrowseGameDir_Click" Padding="16,0">
+                                    <TextBlock Text="Обзор..." FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Button>
+                                <Button Grid.Column="2" Classes="settingsBtn" Margin="10,0,0,0" Height="44" Click="OpenGameFolder_Click" Padding="16,0">
+                                    <TextBlock Text="Открыть" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+
+                        <ToggleSwitch Content="Закрывать лаунчер при запуске игры" IsChecked="{Binding CloseLauncherOnGameStart}" Foreground="White"/>
+                        <ToggleSwitch Content="Показывать логи игры" IsChecked="{Binding ShowGameLogs}" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== SOUNDS ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+                                      Width="20" Height="20" Foreground="#4FC3F7"/>
+                            <TextBlock Text="Звуки" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <ToggleSwitch Content="Звуковые эффекты" IsChecked="{Binding SoundsEnabled}" Foreground="White"/>
+
+                        <StackPanel Spacing="8" IsEnabled="{Binding SoundsEnabled}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel>
+                                    <TextBlock Text="Громкость" FontSize="14" FontWeight="SemiBold"/>
+                                    <TextBlock Text="Общая громкость звуков лаунчера" FontSize="12" Foreground="#888888"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1" Text="{Binding SoundsVolumePercent, StringFormat={}{0}%}"
+                                           FontSize="16" FontWeight="Bold" Foreground="#B388FF" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Slider Name="VolumeSlider" Value="{Binding SoundsVolumeSlider}" Minimum="0" Maximum="100"
+                            TickFrequency="5" IsSnapToTickEnabled="True"/>
+
+                            <Button Classes="settingsBtn" Click="TestSound_Click" Padding="20,0" HorizontalAlignment="Left" Margin="0,8,0,0">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <PathIcon Data="M8 5v14l11-7z" Width="14" Height="14" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Проверить звук" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ===== INFO ===== -->
+                <Border Classes="settingsSection">
+                    <StackPanel Spacing="16">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V9h2v2z"
+                                      Width="20" Height="20" Foreground="#4FC3F7"/>
+                            <TextBlock Text="О программе" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto" HorizontalAlignment="Left">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Revenant Launcher" FontSize="13" Foreground="#888888" Margin="0,0,20,8"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LauncherVersion, StringFormat='v{0}'}"
+                                       FontSize="13" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Папка лаунчера" FontSize="13" Foreground="#888888" Margin="0,0,20,8"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding RootDirectory}"
+                                       FontSize="13" Foreground="White" TextTrimming="CharacterEllipsis" Margin="0,0,0,8"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Файл конфига" FontSize="13" Foreground="#888888" Margin="0,0,20,0"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ConfigFilePath}"
+                                       FontSize="13" Foreground="White" TextTrimming="CharacterEllipsis"/>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button Classes="settingsBtn" Click="OpenLauncher_Click" Padding="16,0">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <PathIcon Data="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"
+                                              Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Папка лаунчера" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="settingsBtn" Click="OpenLogs_Click" Padding="16,0">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <PathIcon Data="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                                              Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Папка логов" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="settingsBtn" Click="ResetDefaults_Click" Padding="16,0">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <PathIcon Data="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"
+                                              Width="16" Height="16" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Сбросить настройки" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ===== ПЛАВАЮЩАЯ КНОПКА "СОХРАНИТЬ" ===== -->
+        <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,30"
+                IsVisible="{Binding HasUnsavedChanges}">
+            <Border.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.2" Easing="CubicEaseOut"/>
+                </Transitions>
+            </Border.Transitions>
+            <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <Border Background="#40FFB74D" CornerRadius="20" Padding="14,8"
+                        BorderBrush="#60FFB74D" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <PathIcon Data="M12 2L1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                                  Width="16" Height="16" Foreground="#FFB74D" VerticalAlignment="Center"/>
+                        <TextBlock Text="Есть несохранённые изменения" FontSize="12" Foreground="#FFD599"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+
+                <Button Classes="playBtn" Click="SaveAll_Click" Padding="24,0" Height="46">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                            <GradientStop Color="#66BB6A" Offset="0"/>
+                            <GradientStop Color="#4CAF50" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <PathIcon Data="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
+                                  Foreground="White" Width="18" Height="18" VerticalAlignment="Center"/>
+                        <TextBlock Text="Сохранить" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Panel>
+</UserControl>

@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncherSetup.ViewModels"
+             x:Class="RevenantLauncherSetup.Views.LicensePage"
+             x:DataType="vm:SetupViewModel">
+
+    <Border Classes="page">
+        <DockPanel Margin="30,10,30,25" LastChildFill="True">
+
+            <!-- Заголовок сверху -->
+            <StackPanel DockPanel.Dock="Top" Spacing="6" Margin="0,0,0,12">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <PathIcon Data="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                              Width="20" Height="20" Foreground="#B388FF" VerticalAlignment="Center"/>
+                    <TextBlock Text="Лицензионное соглашение" Classes="pageTitle" FontSize="18"/>
+                </StackPanel>
+                <TextBlock Text="Прокрутите текст полностью и примите условия для продолжения"
+                           Classes="pageSubtitle" FontSize="11"/>
+            </StackPanel>
+
+            <!-- Кнопки снизу -->
+            <Grid DockPanel.Dock="Bottom" ColumnDefinitions="Auto,*,Auto">
+                <Button Grid.Column="0" Classes="secondaryBtn" Click="Back_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <PathIcon Data="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                                  Width="16" Height="16" Foreground="White" VerticalAlignment="Center"/>
+                        <TextBlock Text="Назад" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="2" Classes="primaryBtn" Click="Next_Click"
+                        IsEnabled="{Binding CanProceedFromLicense}">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <TextBlock Text="Далее" VerticalAlignment="Center"/>
+                        <PathIcon Data="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                                  Width="16" Height="16" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                            <GradientStop Color="#7C4DFF" Offset="0"/>
+                            <GradientStop Color="#536DFE" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+
+            <!-- Чекбокс над кнопками -->
+            <Border DockPanel.Dock="Bottom" Background="#207C4DFF" CornerRadius="10"
+                    BorderBrush="#407C4DFF" BorderThickness="1"
+                    Padding="14,12" Margin="0,12,0,12">
+                <CheckBox IsChecked="{Binding LicenseAccepted}"
+                          Content="Я прочитал(а) и принимаю условия лицензионного соглашения"
+                          FontSize="12" Foreground="#DDDDDD" FontWeight="Medium"/>
+            </Border>
+
+            <!-- Текст лицензии как TextBox (readonly) — умеет правильно скроллить -->
+            <Border Background="#20000000" CornerRadius="10"
+                    BorderBrush="#30FFFFFF" BorderThickness="1" ClipToBounds="True"
+                    Padding="4">
+                <TextBox Text="{Binding LicenseText, Mode=OneWay}"
+                         IsReadOnly="True"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Foreground="#DDDDDD"
+                         FontSize="11"
+                         LineHeight="17"
+                         FontFamily="{StaticResource MainFont}"
+                         Padding="12"
+                         VerticalContentAlignment="Top"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            </Border>
+
+        </DockPanel>
+    </Border>
+</UserControl>

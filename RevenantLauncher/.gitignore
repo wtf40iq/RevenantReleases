@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+**/publish-dist/
+**/publish-single/
+artifacts/
+.update-smoke/
+dist/
+.vs/
+.freebuff/
+.vibe/
+*.log
+*.user
+*.suo
+RevenantLauncherSetup/Assets/payload.zip

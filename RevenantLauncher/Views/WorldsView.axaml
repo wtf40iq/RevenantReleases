@@ -1,0 +1,331 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             xmlns:models="using:RevenantLauncher.Models"
+             xmlns:behaviors="using:RevenantLauncher.Behaviors"
+             x:Class="RevenantLauncher.Views.WorldsView"
+             x:DataType="vm:WorldsViewModel">
+
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="AccentBrush" StartPoint="0%,50%" EndPoint="100%,50%">
+            <GradientStop Color="#7C4DFF" Offset="0"/>
+            <GradientStop Color="#536DFE" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BackupBrush" StartPoint="0%,50%" EndPoint="100%,50%">
+            <GradientStop Color="#26A69A" Offset="0"/>
+            <GradientStop Color="#00897B" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Button.worldTab">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.worldTab:pointerover">
+            <Setter Property="Foreground" Value="#DDDDDD"/>
+        </Style>
+        <Style Selector="Button.worldTabActive">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style Selector="ListBox.worldsListBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+        <Style Selector="ListBox.worldsListBox ListBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style Selector="ListBox.worldsListBox ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style Selector="ListBox.worldsListBox ListBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Panel>
+        <Grid RowDefinitions="Auto,Auto,*" Margin="40,20,40,20">
+
+            <!-- ===== HEADER ===== -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                <StackPanel>
+                    <TextBlock Text="Миры" FontSize="32" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="{Binding StatsDisplay}" FontSize="14" Foreground="#888888"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <Button Classes="settingsBtn" Click="Refresh_Click" Padding="16,0">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"
+                                      Width="16" Height="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Обновить" FontSize="13" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="settingsBtn" Click="OpenFolder_Click" Padding="16,0">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z"
+                                      Width="16" Height="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Открыть папку" FontSize="13" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- ===== TABS ===== -->
+            <Border Grid.Row="1" Background="#20000000" CornerRadius="14" Padding="4" Margin="0,18,0,14">
+                <Grid ColumnDefinitions="*,*,*">
+                    <Button Grid.Column="0" Classes.worldTabActive="{Binding IsWorldsTab}" Classes.worldTab="{Binding !IsWorldsTab}"
+                            Click="TabWorlds_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+                                      Width="16" Height="16" Foreground="#66BB6A"/>
+                            <TextBlock Text="Миры" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="1" Classes.worldTabActive="{Binding IsBackupsTab}" Classes.worldTab="{Binding !IsBackupsTab}"
+                            Click="TabBackups_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" Width="16" Height="16" Foreground="#26A69A"
+                                      RenderTransform="rotate(180deg)"/>
+                            <TextBlock Text="Бэкапы" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="2" Classes.worldTabActive="{Binding IsScreenshotsTab}" Classes.worldTab="{Binding !IsScreenshotsTab}"
+                            Click="TabScreenshots_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"
+                                      Width="16" Height="16" Foreground="#B388FF"/>
+                            <TextBlock Text="Скриншоты" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- ===== CONTENT ===== -->
+            <Panel Grid.Row="2">
+
+                <!-- Loading -->
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                            IsVisible="{Binding IsLoading}" Spacing="10">
+                    <TextBlock Text="Загрузка..." Foreground="#888888" FontSize="14"/>
+                </StackPanel>
+
+                <!-- WORLDS -->
+                <Border Background="#20000000" CornerRadius="12" ClipToBounds="True"
+                        IsVisible="{Binding IsWorldsTab}">
+                    <Panel>
+                        <ListBox Classes="worldsListBox" ItemsSource="{Binding Worlds}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:WorldInfo">
+                                    <Border Classes="modCard" Margin="0,4" behaviors:StaggeredAnimationBehavior.IsEnabled="True">
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <Border Grid.Column="0" Width="52" Height="52" CornerRadius="10" Background="#2A1F3F" ClipToBounds="True">
+                                                <Panel>
+                                                    <PathIcon Data="M12 2L2 7v10l10 5 10-5V7L12 2z"
+                                                              Foreground="#66BB6A" Width="24" Height="24"
+                                                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                              IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNull}}"/>
+                                                    <Image Source="{Binding Icon}" Stretch="UniformToFill"
+                                                           IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                                                </Panel>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center" Spacing="3">
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
+                                                    <Border Background="#3026A69A" CornerRadius="4" Padding="6,2" VerticalAlignment="Center"
+                                                            IsVisible="{Binding HasBackups}">
+                                                        <TextBlock Text="{Binding BackupCount, StringFormat='Бэкапов: {0}'}" FontSize="10" Foreground="#4DD0C0"/>
+                                                    </Border>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <TextBlock Text="{Binding FolderName}" FontSize="11" Foreground="#666666"/>
+                                                    <TextBlock Text="{Binding SizeDisplay}" FontSize="11" Foreground="#666666"/>
+                                                    <TextBlock Text="{Binding LastPlayedDisplay, StringFormat='Играли: {0}'}" FontSize="11" Foreground="#666666"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                                <Button Classes="playBtn" Click="BackupWorld_Click" Tag="{Binding}"
+                                                        Height="36" Padding="12,0">
+                                                    <Button.Background>
+                                                        <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                                            <GradientStop Color="#26A69A" Offset="0"/>
+                                                            <GradientStop Color="#00897B" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Button.Background>
+                                                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                                        <PathIcon Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" Foreground="White" Width="14" Height="14" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="Бэкап" FontSize="12" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Classes="iconBtn" Click="OpenWorldFolder_Click" Tag="{Binding}" VerticalAlignment="Center">
+                                                    <PathIcon Data="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2z" Width="18" Height="18" Foreground="#B0B0B0"/>
+                                                </Button>
+                                                <Button Classes="iconBtn" Click="DeleteWorld_Click" Tag="{Binding}" VerticalAlignment="Center">
+                                                    <PathIcon Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Width="18" Height="18" Foreground="#FF6666"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Panel>
+                </Border>
+
+                <!-- BACKUPS -->
+                <Border Background="#20000000" CornerRadius="12" ClipToBounds="True"
+                        IsVisible="{Binding IsBackupsTab}">
+                    <ListBox Classes="worldsListBox" ItemsSource="{Binding Backups}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="models:BackupInfo">
+                                <Border Classes="modCard" Margin="0,4" behaviors:StaggeredAnimationBehavior.IsEnabled="True">
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                        <Border Grid.Column="0" Width="52" Height="52" CornerRadius="10" Background="#12332F" ClipToBounds="True">
+                                            <PathIcon Data="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                                      Foreground="#26A69A" Width="22" Height="22"
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                      RenderTransform="rotate(180deg)"/>
+                                        </Border>
+                                        <StackPanel Grid.Column="1" Margin="16,0,0,0" VerticalAlignment="Center" Spacing="3">
+                                            <TextBlock Text="{Binding WorldName}" FontSize="15" FontWeight="SemiBold" Foreground="White"/>
+                                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                                <TextBlock Text="{Binding CreatedDisplay}" FontSize="11" Foreground="#666666"/>
+                                                <TextBlock Text="{Binding SizeDisplay}" FontSize="11" Foreground="#666666"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                            <Button Classes="playBtn" Click="RestoreBackup_Click" Tag="{Binding}"
+                                                    Height="36" Padding="12,0">
+                                                <Button.Background>
+                                                    <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                                        <GradientStop Color="#7C4DFF" Offset="0"/>
+                                                        <GradientStop Color="#536DFE" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Button.Background>
+                                                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                                    <PathIcon Data="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" Foreground="White" Width="14" Height="14" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Восстановить" FontSize="12" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Classes="iconBtn" Click="DeleteBackup_Click" Tag="{Binding}" VerticalAlignment="Center">
+                                                <PathIcon Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Width="18" Height="18" Foreground="#FF6666"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+
+                <!-- SCREENSHOTS -->
+                <Border Background="#20000000" CornerRadius="12" ClipToBounds="True"
+                        IsVisible="{Binding IsScreenshotsTab}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding Screenshots}" Margin="12">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="models:ScreenshotInfo">
+                                    <Border Width="220" Height="140" Margin="6" CornerRadius="10" ClipToBounds="True"
+                                            Background="#2A1F3F" Cursor="Hand">
+                                        <Panel>
+                                            <Image Source="{Binding Thumb}" Stretch="UniformToFill"/>
+                                            <Border Background="Transparent" PointerPressed="Screenshot_Click" Tag="{Binding}"/>
+                                            <Border Background="#80000000" VerticalAlignment="Bottom" Padding="8,5" IsHitTestVisible="False">
+                                                <TextBlock Text="{Binding DateDisplay}" FontSize="10" Foreground="#DDDDDD"/>
+                                            </Border>
+                                            <Button Classes="iconBtn" Click="DeleteScreenshot_Click" Tag="{Binding}"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                                    Width="28" Height="28">
+                                                <PathIcon Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Width="14" Height="14" Foreground="#FF6666"/>
+                                            </Button>
+                                        </Panel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+
+            </Panel>
+        </Grid>
+
+        <!-- ===== LIGHTBOX ===== -->
+        <Border Background="#E6000000" IsVisible="{Binding IsLightboxOpen}">
+            <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <TextBlock Text="{Binding SelectedScreenshot.FileName}" FontSize="14" FontWeight="SemiBold"
+                               Foreground="White" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" Classes="winBtn" Width="36" Height="36" Click="LightboxClose_Click">
+                        <TextBlock Text="✕" FontSize="14"/>
+                    </Button>
+                </Grid>
+
+                <Panel Grid.Row="1" Margin="0,12">
+                    <Image Source="{Binding LightboxImage}" Stretch="Uniform"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Classes="winBtn" Width="44" Height="44" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Click="LightboxPrev_Click" Margin="8,0">
+                        <PathIcon Data="M15 6l-6 6 6 6" Width="18" Height="18" Foreground="White"/>
+                    </Button>
+                    <Button Classes="winBtn" Width="44" Height="44" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Click="LightboxNext_Click" Margin="8,0">
+                        <PathIcon Data="M9 6l6 6-6 6" Width="18" Height="18" Foreground="White"/>
+                    </Button>
+                </Panel>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding SelectedScreenshot.DateDisplay}" FontSize="12" Foreground="#888888"
+                               VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <Button Classes="settingsBtn" Click="OpenScreenshotFile_Click" Padding="16,0">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                      Width="14" Height="14" VerticalAlignment="Center"/>
+                            <TextBlock Text="Открыть файл" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="settingsBtn" Click="DeleteScreenshotFromLightbox_Click" Padding="16,0">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                                      Width="14" Height="14" Foreground="#FF6666" VerticalAlignment="Center"/>
+                            <TextBlock Text="Удалить" FontSize="12" Foreground="#FF9999" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Panel>
+</UserControl>

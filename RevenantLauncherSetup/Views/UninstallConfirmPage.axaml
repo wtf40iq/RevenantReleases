@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncherSetup.ViewModels"
+             x:Class="RevenantLauncherSetup.Views.UninstallConfirmPage"
+             x:DataType="vm:SetupViewModel">
+
+    <Border Classes="page">
+        <Grid RowDefinitions="*,Auto" Margin="40,30,40,30">
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" Spacing="24">
+
+                <!-- Иконка -->
+                <Border Width="100" Height="100" CornerRadius="50" HorizontalAlignment="Center"
+                        Background="#30FF6666" BorderBrush="#60FF6666" BorderThickness="2">
+                    <PathIcon Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                              Width="48" Height="48" Foreground="#FF6666"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <TextBlock Text="Удаление Revenant Launcher" Classes="pageTitle"
+                               HorizontalAlignment="Center" FontSize="22"/>
+
+                    <TextBlock TextAlignment="Center" MaxWidth="380" Classes="pageSubtitle">
+                        <Run Text="Вы уверены, что хотите удалить"/>
+                        <Run Text=" Revenant Launcher" FontWeight="SemiBold" Foreground="#B388FF"/>
+                        <Run Text=" со своего компьютера?"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <Border Classes="infoBox" MaxWidth="400" HorizontalAlignment="Center">
+                    <StackPanel Spacing="12">
+                        <CheckBox IsChecked="{Binding DeleteUserData}" Foreground="#DDDDDD">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <PathIcon Data="M12 2L1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                                          Width="16" Height="16" Foreground="#FFB74D" VerticalAlignment="Center"/>
+                                <TextBlock Text="Удалить также мои данные" FontSize="13"
+                                           FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </CheckBox>
+
+                        <TextBlock Text="Аккаунты, история запусков, скачанные версии Minecraft, моды, ресурспаки — всё будет удалено безвозвратно."
+                                   FontSize="11" Foreground="#AAAAAA" TextWrapping="Wrap" Margin="24,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
+            <!-- Кнопки -->
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,20,0,0">
+                <Button Grid.Column="0" Classes="secondaryBtn" Click="Cancel_Click">
+                    <TextBlock Text="Отмена" VerticalAlignment="Center"/>
+                </Button>
+
+                <Button Grid.Column="2" Classes="primaryBtn" Click="Uninstall_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <PathIcon Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                                  Width="16" Height="16" Foreground="White" VerticalAlignment="Center"/>
+                        <TextBlock Text="Удалить" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                            <GradientStop Color="#FF6666" Offset="0"/>
+                            <GradientStop Color="#E53935" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+
+        </Grid>
+    </Border>
+</UserControl>

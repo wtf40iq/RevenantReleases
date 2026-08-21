@@ -1,0 +1,154 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:RevenantLauncher.ViewModels"
+             x:Class="RevenantLauncher.Views.AddAccountDialog"
+             x:DataType="vm:AddAccountDialogViewModel">
+
+    <Border Background="#B0000000" ClipToBounds="True">
+        <Border Background="{DynamicResource DialogBackground}"
+                CornerRadius="{DynamicResource SectionCornerRadius}"
+                BorderBrush="{DynamicResource DialogBorderBrush}"
+                BorderThickness="1"
+                Width="560" MinHeight="440"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BoxShadow="0 20 60 0 #80000000">
+            <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="24">
+
+                <!-- Header -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <TextBlock Text="Добавить аккаунт" FontSize="20" FontWeight="Bold"
+                               Foreground="White" VerticalAlignment="Center"/>
+                    <Button Grid.Column="1" Classes="winBtn" Width="36" Height="36" Click="Close_Click">
+                        <TextBlock Text="✕" FontSize="14"/>
+                    </Button>
+                </Grid>
+
+                <!-- Tabs -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,16,0,0">
+                    <Button Classes.tabActive="{Binding IsOfflineTab}"
+                            Classes.tab="{Binding !IsOfflineTab}"
+                            Click="TabOffline_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                      Width="16" Height="16"/>
+                            <TextBlock Text="Offline" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Classes.tabActive="{Binding IsMicrosoftTab}"
+                            Classes.tab="{Binding !IsMicrosoftTab}"
+                            Click="TabMicrosoft_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M11.55 21H3v-8.55h8.55V21zM21 21h-8.55v-8.55H21V21zM11.55 11.55H3V3h8.55v8.55zM21 11.55h-8.55V3H21v8.55z"
+                                      Width="16" Height="16"/>
+                            <TextBlock Text="Microsoft" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Content -->
+                <Grid Grid.Row="2" Margin="0,24,0,0">
+
+                    <!-- Offline form -->
+                    <StackPanel IsVisible="{Binding IsOfflineTab}" Spacing="16">
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Никнейм" FontSize="13" Foreground="#B0B0B0"/>
+                            <Border Classes="searchBox" Height="48">
+                                <TextBox Text="{Binding Username}"
+                                         Watermark="Введи свой никнейм..."
+                                         Background="Transparent" BorderThickness="0"
+                                         Foreground="White" FontSize="15"
+                                         VerticalAlignment="Center"
+                                         KeyDown="Username_KeyDown"/>
+                            </Border>
+                            <TextBlock Text="От 3 до 16 символов. Только буквы, цифры и _"
+                                       FontSize="11" Foreground="#666666"/>
+                        </StackPanel>
+
+                        <!-- Error -->
+                        <Border Background="#40FF4444" CornerRadius="8" Padding="12,10"
+                                IsVisible="{Binding HasError}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                          Foreground="#FF6666" Width="18" Height="18" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding ErrorMessage}" Foreground="#FFAAAA"
+                                           FontSize="13" VerticalAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Info -->
+                        <Border Background="#207C4DFF" CornerRadius="8" Padding="12,10"
+                                BorderBrush="#407C4DFF" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <PathIcon Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V9h2v2z"
+                                          Foreground="#B388FF" Width="18" Height="18"
+                                          VerticalAlignment="Top" Margin="0,2,0,0"/>
+                                <TextBlock Text="Offline-режим позволит играть без лицензии."
+                                           Foreground="#DDDDDD" FontSize="12" TextWrapping="Wrap"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Microsoft form -->
+                    <StackPanel IsVisible="{Binding IsMicrosoftTab}" Spacing="16" VerticalAlignment="Center">
+
+                        <PathIcon Data="M11.55 21H3v-8.55h8.55V21zM21 21h-8.55v-8.55H21V21zM11.55 11.55H3V3h8.55v8.55zM21 11.55h-8.55V3H21v8.55z"
+                                  Width="64" Height="64" Foreground="#7C4DFF"
+                                  HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="Microsoft-аутентификация"
+                                   FontSize="18" FontWeight="SemiBold"
+                                   Foreground="White" HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="Скоро появится возможность войти через Microsoft-аккаунт (лицензионная версия Minecraft)."
+                                   FontSize="13" Foreground="#B0B0B0"
+                                   HorizontalAlignment="Center" TextAlignment="Center"
+                                   TextWrapping="Wrap" MaxWidth="360"/>
+
+                        <Border Background="#40FFAA00" CornerRadius="8" Padding="12,10"
+                                BorderBrush="#60FFAA00" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <PathIcon Data="M12 2L1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                                          Foreground="#FFCC66" Width="18" Height="18"
+                                          VerticalAlignment="Center"/>
+                                <TextBlock Text="Функция в разработке"
+                                           Foreground="#FFDDAA" FontSize="12"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                </Grid>
+
+                <!-- Footer -->
+                <Grid Grid.Row="3" Margin="0,20,0,0" ColumnDefinitions="*,Auto,Auto">
+                    <Border/>
+                    <Button Grid.Column="1" Classes="settingsBtn" Click="Close_Click" Padding="24,0" Margin="0,0,10,0">
+                        <TextBlock Text="Отмена" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Grid.Column="2" Classes="playBtn" Click="Add_Click"
+                            IsEnabled="{Binding !IsBusy}">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                                <GradientStop Color="#7C4DFF" Offset="0"/>
+                                <GradientStop Color="#536DFE" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <PathIcon Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                                      Foreground="White" Width="18" Height="18"
+                                      VerticalAlignment="Center"/>
+                            <TextBlock Text="Добавить" FontSize="14" FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Border>
+</UserControl>
