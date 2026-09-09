@@ -37,7 +37,7 @@
 |---|---|
 | ![Главная](docs/screenshots/home.png) | ![Кастомизация](docs/screenshots/customization.png) |
 
-| Моды · Modrinth | Миры · бэкапы |
+| Моды · Modrinth | Версии · Загрузчики|
 |---|---|
 | ![Моды](docs/screenshots/mods.png) | ![Версии](docs/screenshots/version.png) |
 
