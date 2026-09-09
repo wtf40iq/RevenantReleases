@@ -1,4 +1,3 @@
-<img width="1328" height="848" alt="Snipaste_2026-09-09_21-53-12" src="https://github.com/user-attachments/assets/8c82d725-aae4-4cdc-948b-307bb72a0e1f" /># Revenant Launcher
 
 <p align="center">
   <img src="RevenantLauncher/Assets/Rlogo.png" width="96" alt="Revenant Launcher" />
