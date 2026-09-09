@@ -37,7 +37,7 @@
 
 | Главная | Кастомизация |
 |---|---|
-| ![Главная](<img width="1328" height="848" alt="Snipaste_2026-09-09_21-53-12" src="https://github.com/user-attachments/assets/1017573d-8f18-49d8-913e-1315ebbc0fca" />) | ![Кастомизация](docs/screenshots/customization.png) |
+| ![Главная](docs/screenshots/home.png) | ![Кастомизация](docs/screenshots/customization.png) |
 
 | Моды · Modrinth | Миры · бэкапы |
 |---|---|
