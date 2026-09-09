@@ -3,11 +3,8 @@
 **/publish-dist/
 **/publish-single/
 artifacts/
-.update-smoke/
 dist/
 .vs/
-.freebuff/
-.vibe/
 *.log
 *.user
 *.suo
