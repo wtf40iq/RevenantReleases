@@ -32,7 +32,6 @@
 
 ## Скриншоты
 
-> Вставь сюда свои кадры — замени пути ниже. Рекомендуем `docs/screenshots/*.png` 800–1200px шириной.
 
 | Главная | Кастомизация |
 |---|---|
@@ -40,7 +39,7 @@
 
 | Моды · Modrinth | Миры · бэкапы |
 |---|---|
-| ![Моды](docs/screenshots/mods.png) | ![Миры](docs/screenshots/worlds.png) |
+| ![Моды](docs/screenshots/mods.png) | ![Версии](docs/screenshots/version.png) |
 
 ---
 
