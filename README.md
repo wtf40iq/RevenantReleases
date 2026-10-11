@@ -4,18 +4,16 @@
 
 <br/>
 
-<a href="https://github.com/wtf40iq/RevenantReleases/releases/latest"><img src="https://img.shields.io/github/v/release/wtf40iq/RevenantReleases?style=for-the-badge&label=версия&color=8b5cf6&labelColor=16161d" alt="Версия" /></a>
-<a href="https://github.com/wtf40iq/RevenantReleases/releases"><img src="https://img.shields.io/github/downloads/wtf40iq/RevenantReleases/total?style=for-the-badge&label=загрузки&color=e8403a&labelColor=16161d" alt="Загрузки" /></a>
+<a href="https://github.com/wtf40iq/RevenantReleases/releases/latest"><img src="https://img.shields.io/github/v/release/wtf40iq/RevenantReleases?style=for-the-badge&label=release&color=8b5cf6&labelColor=16161d" alt="Версия" /></a>
+<a href="https://github.com/wtf40iq/RevenantReleases/releases"><img src="https://img.shields.io/github/downloads/wtf40iq/RevenantReleases/total?style=for-the-badge&label=downloads&color=e8403a&labelColor=16161d" alt="Загрузки" /></a>
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0ea5e9?style=for-the-badge&logo=windows&logoColor=white&labelColor=16161d" alt="Windows" />
 <img src="https://img.shields.io/badge/Java-не%20нужна-22c55e?style=for-the-badge&logo=openjdk&logoColor=white&labelColor=16161d" alt="Java" />
 
 <br/><br/>
 
-<a href="https://github.com/wtf40iq/RevenantReleases/releases/latest">
-  <img src="https://img.shields.io/badge/⬇%20%20Скачать%20для%20Windows-8b5cf6?style=for-the-badge&logoColor=white" height="52" alt="Скачать для Windows" />
-</a>
+<a href="https://github.com/wtf40iq/RevenantReleases/releases/latest"><img src="docs/readme/download.svg" width="340" alt="Скачать для Windows" /></a>
 
-<br/><br/>
+<br/>
 
 <b><a href="#-возможности">Возможности</a></b> &nbsp;•&nbsp;
 <b><a href="#-скриншоты">Скриншоты</a></b> &nbsp;•&nbsp;
