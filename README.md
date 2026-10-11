@@ -175,6 +175,6 @@ Vanilla, Forge и Fabric — ставятся сами. Нужная Java под
 
 <img src="https://img.shields.io/badge/сделано%20с%20❤️%20для%20игроков-16161d?style=for-the-badge" alt="" />
 
-<sub>© 2026 lotesnowhallen · Revenant Launcher · Не является официальным продуктом Minecraft. Не связан с Mojang или Microsoft.</sub>
+<sub>© 2026 wtf40iq · Revenant Launcher · Не является официальным продуктом Minecraft. Не связан с Mojang или Microsoft.</sub>
 
 </div>
