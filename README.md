@@ -1,98 +1,182 @@
+<div align="center">
 
-<p align="center">
-  <img src="RevenantLauncher/Assets/Rlogo.png" width="96" alt="Revenant Launcher" />
-</p>
+<img src="docs/readme/hero.svg" alt="Revenant Launcher" width="100%" />
 
-<p align="center">
-  <b>Современный лаунчер Minecraft для Windows</b><br/>
-  Ваниль · Forge · Fabric · моды и ресурспаки из Modrinth · миры, бэкапы и скриншоты · гибкая кастомизация
-</p>
+<br/>
 
-<p align="center">
-  <a href="https://github.com/wtf40iq/RevenantReleases/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/wtf40iq/RevenantReleases?label=latest&style=flat-square&color=7c3aed" /></a>
-  <a href="https://github.com/wtf40iq/RevenantReleases/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/wtf40iq/RevenantReleases/total?style=flat-square&color=0ea5e9" /></a>
-  <img alt="Platform" src="https://img.shields.io/badge/platform-Windows-0078d6?style=flat-square" />
-  <img alt=".NET" src="https://img.shields.io/badge/.NET-8.0-512bd4?style=flat-square" />
-  <img alt="License" src="https://img.shields.io/badge/license-Proprietary-1f2937?style=flat-square" />
-</p>
+<a href="https://github.com/wtf40iq/RevenantReleases/releases/latest"><img src="https://img.shields.io/github/v/release/wtf40iq/RevenantReleases?style=for-the-badge&label=версия&color=8b5cf6&labelColor=16161d" alt="Версия" /></a>
+<a href="https://github.com/wtf40iq/RevenantReleases/releases"><img src="https://img.shields.io/github/downloads/wtf40iq/RevenantReleases/total?style=for-the-badge&label=загрузки&color=e8403a&labelColor=16161d" alt="Загрузки" /></a>
+<img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0ea5e9?style=for-the-badge&logo=windows&logoColor=white&labelColor=16161d" alt="Windows" />
+<img src="https://img.shields.io/badge/Java-не%20нужна-22c55e?style=for-the-badge&logo=openjdk&logoColor=white&labelColor=16161d" alt="Java" />
 
-<p align="center">
-  <a href="https://github.com/wtf40iq/RevenantReleases/releases/latest"><b>⬇ Скачать установщик (Windows)</b></a>
-  ·
-  <a href="#скриншоты">Скриншоты</a>
-  ·
-  <a href="#возможности">Возможности</a>
-  ·
-  <a href="#установка">Установка</a>
-  ·
-  <a href="#кастомизация">Кастомизация</a>
-</p>
+<br/><br/>
 
----
+<a href="https://github.com/wtf40iq/RevenantReleases/releases/latest">
+  <img src="https://img.shields.io/badge/⬇%20%20Скачать%20для%20Windows-8b5cf6?style=for-the-badge&logoColor=white" height="52" alt="Скачать для Windows" />
+</a>
 
-## Скриншоты
+<br/><br/>
 
+<b><a href="#-возможности">Возможности</a></b> &nbsp;•&nbsp;
+<b><a href="#-скриншоты">Скриншоты</a></b> &nbsp;•&nbsp;
+<b><a href="#-один-лаунчер--любой-стиль">Стили</a></b> &nbsp;•&nbsp;
+<b><a href="#-установка">Установка</a></b> &nbsp;•&nbsp;
+<b><a href="#-вопросы">Вопросы</a></b>
 
-| Главная | Кастомизация |
+</div>
+
+<br/>
+
+## ✨ Возможности
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🚀 Запуск в один клик
+Vanilla, Forge и Fabric — ставятся сами. Нужная Java подбирается автоматически, версии не мешают друг другу.
+
+</td>
+<td width="33%" valign="top">
+
+### 🧩 Моды из Modrinth
+Поиск, установка и обновление модов, ресурспаков и модпаков прямо в лаунчере — с фильтрами по версии и загрузчику.
+
+</td>
+<td width="33%" valign="top">
+
+### 🎨 Твой дизайн
+Темы **Standart** и **Glass**, 17 акцентных цветов, свой цвет и градиенты, свои фоны — картинки, GIF и видео.
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+
+### 🗂️ Свои сборки
+Мастер «Новая версия»: название → загрузчик → версия. Сборки с модами переключаются в пару кликов.
+
+</td>
+<td width="33%" valign="top">
+
+### 🌍 Миры и скриншоты
+Список миров, бэкапы одной кнопкой, быстрая галерея скриншотов с превью.
+
+</td>
+<td width="33%" valign="top">
+
+### 👥 Друзья и история
+Аккаунты Revenant, друзья и активность, история игровых сессий со статистикой, Discord Rich Presence.
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+## 📸 Скриншоты
+
+<div align="center">
+
+### Каталог модов
+<sub>Тысячи модов из Modrinth — установка в одно нажатие</sub>
+
+<img src="docs/readme/mods.svg" alt="Моды" width="92%" />
+
+<br/><br/>
+
+### Выбор версии
+<sub>Vanilla, Forge, Fabric и свои сборки — в одном меню</sub>
+
+<img src="docs/readme/versions.svg" alt="Выбор версии" width="92%" />
+
+<br/><br/>
+
+### Новая версия
+<sub>Создание сборки по шагам — без лишних настроек</sub>
+
+<img src="docs/readme/create.svg" alt="Новая версия" width="92%" />
+
+<br/><br/>
+
+### Кастомизация
+<sub>Тема, акцент, фон, цвета интерфейса и пресеты</sub>
+
+<img src="docs/readme/custom.svg" alt="Кастомизация" width="92%" />
+
+</div>
+
+<br/>
+
+## 🌈 Один лаунчер — любой стиль
+
+<div align="center">
+<img src="docs/readme/styles.svg" alt="Стили лаунчера" width="100%" />
+<br/>
+<sub>Выбери тему, цвет и фон — интерфейс перекрасится целиком, вплоть до логотипа.</sub>
+</div>
+
+<br/>
+
+## 📦 Установка
+
+| Шаг | Что сделать |
+|:--:|---|
+| **1** | Скачай `RevenantLauncherSetup-vX.Y.Z.exe` со страницы [последнего релиза](https://github.com/wtf40iq/RevenantReleases/releases/latest) |
+| **2** | Запусти установщик — он сам развернёт лаунчер и создаст ярлык |
+| **3** | Войди в аккаунт, выбери версию и жми **Играть** |
+
+> [!TIP]
+> Обновления приходят сами: лаунчер скачивает новую версию в фоне и предлагает установить её сейчас или при следующем запуске. Аккаунты, настройки и миры сохраняются.
+
+### Требования
+
+| | |
 |---|---|
-| ![Главная](docs/screenshots/home.png) | ![Кастомизация](docs/screenshots/customization.png) |
+| **Система** | Windows 10 / 11 (x64) |
+| **Java** | не нужна — подберётся автоматически |
+| **Интернет** | для входа, загрузки версий и модов |
 
-| Моды · Modrinth | Версии · Загрузчики|
-|---|---|
-| ![Моды](docs/screenshots/mods.png) | ![Версии](docs/screenshots/version.png) |
+<br/>
 
----
+## ❓ Вопросы
 
-## Возможности
+<details>
+<summary><b>Какие аккаунты поддерживаются?</b></summary>
+<br/>
+Аккаунт Microsoft и офлайн-аккаунт для игры. Отдельно — профиль Revenant для друзей, чата и активности: он создаётся прямо в лаунчере.
+</details>
 
-**Запуск**
-- Ваниль, Forge и Fabric — установка в один клик, изоляция версий, авто-подбор Java
-- Свои версии, быстрый выбор загрузчика, окно игры с разрешением и аргументами JVM
+<details>
+<summary><b>Windows ругается на установщик (SmartScreen)</b></summary>
+<br/>
+Это обычное предупреждение для новых программ без дорогой подписи. Нажми «Подробнее» → «Выполнить в любом случае». Скачивай установщик только со страницы <a href="https://github.com/wtf40iq/RevenantReleases/releases">Releases</a>.
+</details>
 
-**Контент**
-- **Моды / Ресурспаки / Модпаки** — поиск и установка напрямую из Modrinth, фильтры по версии и лоадеру, пагинация
-- **Миры** — список миров, бэкапы в один клик, скриншоты (`F2`) с превью
+<details>
+<summary><b>Где хранятся мои миры и моды?</b></summary>
+<br/>
+В папке игры лаунчера — открыть её можно из настроек. При обновлении лаунчера ничего не удаляется.
+</details>
 
-**Социальное**
-- Аккаунты Revenant, друзья, заявки, чат и активность — без привязки к аккаунту Minecraft
+<details>
+<summary><b>Нашёл баг или есть идея</b></summary>
+<br/>
+Создай <a href="https://github.com/wtf40iq/RevenantReleases/issues">Issue</a> — опиши, что случилось, и приложи скриншот.
+</details>
 
-**Кастомизация**
-- Темы **Standart / Glass**, акцентные цвета и градиенты, выбор фона (изображение / GIF / видео) с редактором (кроп, масштаб, поворот, отражение)
-- Тонировка баннера, цвета интерфейса (окно / панели), эффект дождя, пресеты — экспорт/импорт одним файлом
-- Полная локализация **RU / EN**
+<br/>
 
-**Прочее**
-- История запусков, Discord Rich Presence, звуки, автообновление через установщик
+## 📝 Что нового
 
-## Установка
+Полная история изменений — в [Releases](https://github.com/wtf40iq/RevenantReleases/releases). Последнее обновление **0.7.0**: новое меню версий и мастер «Новая версия», единые иконки, быстрые скриншоты, интерфейс в цветах темы и усиленная защита входа.
 
-1. Скачай `RevenantLauncherSetup-v*.*.*.exe` из [Releases](https://github.com/wtf40iq/RevenantReleases/releases/latest).
-2. Запусти установщик — он развернёт лаунчер и создаст ярлык.
-3. Открой лаунчер, выбери версию и нажми **Играть**.
+<br/>
 
-> Требуется **Windows 10/11 x64**. Отдельная установка Java не нужна — лаунчер подберёт подходящую версию автоматически.
+<div align="center">
 
-## Кастомизация
+<img src="https://img.shields.io/badge/сделано%20с%20❤️%20для%20игроков-16161d?style=for-the-badge" alt="" />
 
-Все настройки — в разделе **Кастомизация**:
-- **Акцент** — цвет кнопок, рамок и выделений (ЛКМ — акцент, ПКМ — градиент)
-- **Фон** — встроенные баннеры или свой (`JPG/PNG/GIF/WEBP`, в том числе анимированный)
-- **Цвета интерфейса** — два базовых цвета (окно / панели), остальное подстраивается автоматически
-- **Эффекты** — тонировка баннера и мягкий дождь поверх фона
-- **Пресеты** — сохрани текущую тему как именованный конфиг и поделись файлом с другом
+<sub>© 2026 lotesnowhallen · Revenant Launcher · Не является официальным продуктом Minecraft. Не связан с Mojang или Microsoft.</sub>
 
-## Обновления
-
-Лаунчер проверяет обновления при старте. Когда выходит новая версия — появится баннер с кнопкой обновления. Установщик сохраняет твои аккаунты, настройки и папку игры.
-
-История изменений — в описаниях релизов: [Releases](https://github.com/wtf40iq/RevenantReleases/releases).
-
-## Поддержка
-
-Нашёл баг или есть идея? Создай [Issue](https://github.com/wtf40iq/RevenantReleases/issues) в этом репозитории или напиши автору.
-
----
-
-<p align="center">
-  <sub>© 2026 lotesnowhallen · Revenant Launcher</sub>
-</p>
+</div>
